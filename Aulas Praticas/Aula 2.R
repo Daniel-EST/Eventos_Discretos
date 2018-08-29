@@ -6,6 +6,5 @@ r_poisson <- function(lambda){
     p <- p * lambda/i
     f <- f + p 
   }
-  x <- i
-  return(x)
+  return(i)
 }
