@@ -17,8 +17,4 @@ poisson <- function(lambda){
     return(passos)
   }
 }
-x <- 0
-for (i in 1:1000){
-  x[i] <- poisson(1000)[1]
-}
-mean(x)
+
