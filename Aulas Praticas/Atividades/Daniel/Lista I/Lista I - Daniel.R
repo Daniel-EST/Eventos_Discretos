@@ -93,3 +93,36 @@ mean(x) # um dos valores foi 5.66, é faz sentido, é bem próximo do valor espe
 # do.
 
 # b) Caso contínuo
+
+rnormal2 <- function(mu, sigma2){
+  u1 <- runif(1)
+  y1 <- -log(u1)
+  u2 <- runif(1)
+  y2 <- -log(u2)
+  while(y2 - (1/2) * (y1 - 1)**2 <= 0){
+    u1 <- runif(1)
+    y1 <- -log(u1)
+    u2 <- runif(1)
+    y2 <- -log(u2)
+  }
+  u1 <- runif(1)
+  x <- ifelse(u1 < 1/2, y1, -y1)
+  return(sqrt(sigma2) * x - mu)
+}
+rnormal2(0,1)
+
+rnormaL2 <- function(mu, sigma2){
+  u1 <- runif(1)
+  y1 <- -log(u1)
+  u2 <- runif(1)
+  y2 <- -log(u2)
+  while(y2 - (1/2) * (y1 - 1)**2 <= 0){
+    u1 <- runif(1)
+    y1 <- -log(u1)
+    u2 <- runif(1)
+    y2 <- -log(u2)
+  }
+  x <- sample(c(y1,-y1), 1) # Ao invés de criar outra uniforme.
+  return(sqrt(sigma2) * x - mu)
+}
+rnormaL2(0,1)
