@@ -6,7 +6,6 @@ poisson=function(lambda,n){
       i <- i+1;p <- p*lambda/i;f <- f+p
     }
     x <- i
-    i <- 0;p <- exp(-1*lambda);f <-p
-  cat("Némero gerado é;",x)
+  cat("Número gerado é;",x)
 }
 poisson(10)
