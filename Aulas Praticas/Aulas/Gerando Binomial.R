@@ -11,7 +11,7 @@ ber <- function(p){
   }
 }
 
-binomial <- function(p,n){
+binomial <- function(n,p){
   y <- 0
   for (i in 1:n){
     y[i] <- ber(p)
@@ -19,4 +19,8 @@ binomial <- function(p,n){
   x <- sum(y)
   return(x)
 }
-binomial(0.4,10)
+x <- 0
+for (i in 1:100000){
+  x[i] <- binomial(10,0.4)
+}
+mean(x); mean(rbinom(100000,10,.4))
