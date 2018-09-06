@@ -1,0 +1,194 @@
+---
+title: "Trabalho de Simulção"
+author: "Gabriel Mizuno"
+date: "06/09/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1-)
+
+## a-)
+
+Algoritmo 1:  
+
+```{r}
+poisson=function(lambda,n){
+  x <- 0
+  u <- runif(1)
+  i <- 0;p <- exp(-1*lambda);f <-p
+  while(u>=f){
+      i <- i+1;p <- p*lambda/i;f <- f+p
+    }
+    x <- i
+  cat("Número gerado é;",x)
+}
+poisson(10)
+
+```
+
+Algoritmo 2:    
+Esse algoritmo é mais eficiente para um $\lambda$ grande
+
+```{r cars}
+poisson <- function(lambda){
+  u <- runif(1);I <- as.integer(lambda); f <- ppois(I,lambda)
+  if (u<f){
+    i <- I; p <- dpois(i,lambda); f <- f-p
+    while (u<f){
+      i <- i-1; p <- dpois(i,lambda); f <- f-p
+    }
+    x <- i
+    return(x)
+  }
+  else{
+    i <- I+1; p <- dpois(i,lambda); f <- f+p
+    while (u>=f){
+      i <- i+1; p <- p*lambda/i; f <- f+p
+    }
+    x <- i+1
+    cat("Número gerado é;",x)
+  }
+}
+poisson(1000)
+```
+
+## b-):
+
+Nessa questão estamos contando o número de passos necessário para gerar um número com os algoritmos usados no item a.
+
+Contando 1:
+
+```{r}
+poisson_c1=function(lambda,n){
+  u <- runif(1)
+  i <- 0;p <- exp(-1*lambda);f <-p;cont <- 1
+  while(u>=f){
+    i <- i+1;p <- p*lambda/i;f <- f+p
+    cont<- cont+1
+  }
+  passos <- cont
+  return(passos)
+}
+```
+
+Contando 2:
+
+```{r}
+poisson_c2 <- function(lambda){
+  u <- runif(1);I <- as.integer(lambda); f <- ppois(I,lambda); passos <- 1
+  if (u<f){
+    i <- I; p <- dpois(i,lambda); f <- f-p
+    while (u<f){
+      i <- i-1; p <- dpois(i,lambda); f <- f-p
+      passos <- passos+1
+    }
+    return(passos)
+  }
+  else{
+    i <- I+1; p <- dpois(i,lambda); f <- f+p
+    while (u>=f){
+      i <- i+1; p <- p*lambda/i; f <- f+p
+      passos <- passos+1
+    }
+    return(passos)
+  }
+}
+```
+ 
+Analisando quantidade de passos necessario para gerar um número usando o Contando 2 
+
+```{r}
+y <- 0
+for (i in 1:1000){
+  y[i] <- poisson_c1(400)
+}
+mean(y)
+```
+
+Analisando quantidade de passos necessario para gerar um número usando o Contando 2 
+
+```{r}
+x <- 0
+for (i in 1:1000){
+  x[i] <- poisson_c2(400)
+}
+mean(x)
+```
+
+Notamos que o número de ciclos usando poisson_c2 é bem menor do que o número de ciclos para gerar usano poisson_c1, alem disso temos uma restrição quanto ao valor de lammbda sendo que no primeiro método (poisson_c1) não podeira ser muito grande sem um alto custo computacional, ja usando o segundo método essa restrição é menor.
+
+# 2-)
+
+## a-)
+
+Estou usando o método da rejeição e para isso estou comparando com uma uniforme discreta $Y\sim \lbrace 1,\cdots,10 \rbrace$
+Criando a função para gerar um número aletório de uma função discreta do enunciado.
+
+```{r}
+gerando_X <- function(p,q){
+  #Achando a constante c
+  c <- max(p/q)
+  
+  #Estou gerando Y
+  u1 <- runif(1)
+  Y <- as.integer(10*u1)+1
+  u2 <- runif(1);u2
+  
+  #Gerando X
+  while(u2>=p[Y]/(c*q[Y])){
+    u1 <- runif(1)
+    Y <- as.integer(10*u1)+1
+    u2 <- runif(1)
+  }
+  X <- Y
+  return(X)
+} 
+```
+
+## b-)
+
+Vamos gerar um exponencial 1º
+
+```{r}
+expo <- function(lambda){
+  u <- runif(1)
+  y <- -log(1-u)/lambda
+  return(y)
+}
+```
+
+Vamos gerar primeiro normal padrão e dps com uma transformação teremos uma normal qualquer
+Vamos usar o método da rejeicao com $c=\frac{2e^{1/2}}{\sqrt(2\pi)}$ e $h(y)=e^{\frac{-(y-1)^2}{2}}$
+
+```{r}
+normal <- function(mu,sigma2){
+  y <- expo(1); y
+  u1 <- runif(1)
+  while (u1>=exp(-(y-1)**2/2)){
+    y <- expo(1)
+    u1 <- runif(1)
+  }
+  u2 <- runif(1)
+  if (u2<=.5){
+    x <- (-1)*y
+  }
+  else {
+    x <- y
+  }
+  #Gerando uma normal sem ser padrão
+  x <- sigma2*x + mu
+  return(x)
+}
+
+a <- 0
+for (i in 1:1000){
+  a[i] <- normal(2,1)
+} 
+mean(a)
+```
+
+
