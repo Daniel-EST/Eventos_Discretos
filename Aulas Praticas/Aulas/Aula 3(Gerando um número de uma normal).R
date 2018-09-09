@@ -29,9 +29,9 @@ normal <- function(mu,sigma2){
 }
 
 a <- 0
-for (i in 1:1000){
+for (i in 1:100000){
   a[i] <- normal(0,1)
 }
-
+mean(a)
 hist(a, freq=FALSE)
 curve(dnorm(x,0,1),add=TRUE)
