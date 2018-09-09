@@ -1,5 +1,5 @@
 ---
-title: "Trabalho de Simulção"
+title: "Trabalho de SimulÃ§Ã£o"
 author: "Gabriel Mizuno"
 date: "11/09/2018"
 output: html_document
@@ -24,14 +24,14 @@ poisson=function(lambda,n){
       i <- i+1;p <- p*lambda/i;f <- f+p
     }
     x <- i
-  cat("Número gerado é;",x)
+  cat("NÃºmero gerado Ã©;",x)
 }
 poisson(10)
 
 ```
 
 Algoritmo 2:    
-Esse algoritmo é mais eficiente para um $\lambda$ grande
+Esse algoritmo Ã© mais eficiente para um $\lambda$ grande
 
 ```{r cars}
 poisson <- function(lambda){
@@ -50,7 +50,7 @@ poisson <- function(lambda){
       i <- i+1; p <- p*lambda/i; f <- f+p
     }
     x <- i+1
-    cat("Número gerado é;",x)
+    cat("NÃºmero gerado Ã©;",x)
   }
 }
 poisson(1000)
@@ -58,7 +58,7 @@ poisson(1000)
 
 ## b-):
 
-Nessa questão estamos contando o número de passos necessário para gerar um número com os algoritmos usados no item a.
+Nessa questÃ£o estamos contando o nÃºmero de passos necessÃ¡rio para gerar um nÃºmero com os algoritmos usados no item a.
 
 Contando 1:
 
@@ -99,7 +99,7 @@ poisson_c2 <- function(lambda){
 }
 ```
  
-Analisando quantidade de passos necessário para gerar um número usando o Contando 1
+Analisando quantidade de passos necessÃ¡rio para gerar um nÃºmero usando o Contando 1
 
 ```{r}
 y <- 0
@@ -109,7 +109,7 @@ for (i in 1:1000){
 mean(y)
 ```
 
-Analisando quantidade de passos necessário para gerar um número usando o Contando 2
+Analisando quantidade de passos necessÃ¡rio para gerar um nÃºmero usando o Contando 2
 
 ```{r}
 x <- 0
@@ -119,14 +119,14 @@ for (i in 1:1000){
 mean(x)
 ```
 
-Notamos que o número de ciclos usando poisson_c2 é bem menor do que o número de ciclos para gerar usando poisson_c1, além disso temos uma restrição quanto ao valor de lambda sendo que no primeiro método (poisson_c1) não poderia ser muito grande sem um alto custo computacional( basta testar alguns casos para verificar um aumento na lentidão), já usando o segundo método essa restrição é menor.
+Notamos que o nÃºmero de ciclos usando poisson_c2 Ã© bem menor do que o nÃºmero de ciclos para gerar usando poisson_c1, alÃ©m disso temos uma restriÃ§Ã£o quanto ao valor de lambda sendo que no primeiro m?todo (poisson_c1) nÃ£o poderia ser muito grande sem um alto custo computacional( basta testar alguns casos para verificar um aumento na lentid?o), jÃ¡ usando o segundo m?todo essa restriÃ§Ã£o Ã© menor.
 
 # 2-)
 
 ## a-)
 
-Estou usando o método da rejeição e para isso estou usando uma uniforme discreta $Y\sim \lbrace 1,\cdots,10 \rbrace$
-Criando a função para gerar um número aletório de uma função discreta do enunciado.
+Estou usando o mÃ©todo da rejeiÃ§Ã£o e para isso estou usando uma uniforme discreta $Y\sim \lbrace 1,\cdots,10 \rbrace$
+Criando a funÃ§Ã£o para gerar um numero aletÃ³rio de uma funÃ§Ã£o discreta do enunciado.
 
 ```{r}
 gerando_X <- function(p,q){
@@ -151,7 +151,7 @@ gerando_X <- function(p,q){
 
 ## b-)
 
-Vamos gerar um exponencial 1º
+Vamos gerar um exponencial 1?
 
 ```{r}
 expo <- function(lambda){
@@ -161,8 +161,8 @@ expo <- function(lambda){
 }
 ```
 
-Vamos gerar primeiro normal padrão e dps com uma transformação teremos uma normal qualquer
-Vamos usar o método da rejeicao com $c=\frac{2e^{1/2}}{\sqrt(2\pi)}$ e $h(y)=e^{\frac{-(y-1)^2}{2}}$
+Vamos gerar primeiro normal padrÃ£o e dps com uma transformaÃ§Ã£o teremos uma normal qualquer
+Vamos usar o mÃ©todo da rejeicao com $c=\frac{2e^{1/2}}{\sqrt(2\pi)}$ e $h(y)=e^{\frac{-(y-1)^2}{2}}$
 
 ```{r}
 normal <- function(mu,sigma2){
@@ -179,7 +179,7 @@ normal <- function(mu,sigma2){
   else {
     x <- y
   }
-  #Gerando uma normal sem ser padrão
+  #Gerando uma normal sem ser padr?o
   x <- sigma2*x + mu
   return(x)
 }

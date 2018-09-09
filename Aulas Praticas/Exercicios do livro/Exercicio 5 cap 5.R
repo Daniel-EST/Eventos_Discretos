@@ -1,4 +1,4 @@
-#Vamos usar o metodo da função inversa.
+#Vamos usar o metodo da funÃ§Ã£o inversa.
 
 f <- function( ){
   u <- runif(1)
