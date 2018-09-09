@@ -1,7 +1,7 @@
 ---
 title: "Trabalho de Simulção"
 author: "Gabriel Mizuno"
-date: "06/09/2018"
+date: "11/09/2018"
 output: html_document
 ---
 
@@ -99,7 +99,7 @@ poisson_c2 <- function(lambda){
 }
 ```
  
-Analisando quantidade de passos necessario para gerar um número usando o Contando 2 
+Analisando quantidade de passos necessário para gerar um número usando o Contando 1
 
 ```{r}
 y <- 0
@@ -109,7 +109,7 @@ for (i in 1:1000){
 mean(y)
 ```
 
-Analisando quantidade de passos necessario para gerar um número usando o Contando 2 
+Analisando quantidade de passos necessário para gerar um número usando o Contando 2
 
 ```{r}
 x <- 0
@@ -119,13 +119,13 @@ for (i in 1:1000){
 mean(x)
 ```
 
-Notamos que o número de ciclos usando poisson_c2 é bem menor do que o número de ciclos para gerar usano poisson_c1, alem disso temos uma restrição quanto ao valor de lammbda sendo que no primeiro método (poisson_c1) não podeira ser muito grande sem um alto custo computacional, ja usando o segundo método essa restrição é menor.
+Notamos que o número de ciclos usando poisson_c2 é bem menor do que o número de ciclos para gerar usando poisson_c1, além disso temos uma restrição quanto ao valor de lambda sendo que no primeiro método (poisson_c1) não poderia ser muito grande sem um alto custo computacional( basta testar alguns casos para verificar um aumento na lentidão), já usando o segundo método essa restrição é menor.
 
 # 2-)
 
 ## a-)
 
-Estou usando o método da rejeição e para isso estou comparando com uma uniforme discreta $Y\sim \lbrace 1,\cdots,10 \rbrace$
+Estou usando o método da rejeição e para isso estou usando uma uniforme discreta $Y\sim \lbrace 1,\cdots,10 \rbrace$
 Criando a função para gerar um número aletório de uma função discreta do enunciado.
 
 ```{r}
