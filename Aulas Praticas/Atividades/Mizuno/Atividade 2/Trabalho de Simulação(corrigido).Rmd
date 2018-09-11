@@ -1,5 +1,5 @@
 ---
-title: "Trabalho de Simulção"
+title: "Trabalho de Simulação (corrigido)"
 author: "Gabriel Mizuno"
 date: "11/09/2018"
 output: html_document
@@ -19,18 +19,16 @@ knitr::opts_chunk$set(echo = TRUE)
 Algoritmo 1:  
 
 ```{r}
-poisson=function(lambda,n){
-  x <- 0
+poisson=function(lambda){
   u <- runif(1)
-  i <- 0;p <- exp(-1*lambda);f <-p
+  i <- 0; p <- exp(-1*lambda); f <-p
   while(u>=f){
-      i <- i+1;p <- p*lambda/i;f <- f+p
+      i <- i+1; p <- p*lambda/i; f <- f+p
     }
     x <- i
   cat("Número gerado é;",x)
 }
 poisson(10)
-
 ```
 
 Algoritmo 2:    
@@ -38,7 +36,7 @@ Esse algoritmo é mais eficiente para um $\lambda$ grande
 
 ```{r cars}
 poisson <- function(lambda){
-  u <- runif(1);I <- as.integer(lambda); f <- ppois(I,lambda)
+  u <- runif(1); I <- round(lambda); f <- ppois(I,lambda)
   if (u<f){
     i <- I; p <- dpois(i,lambda); f <- f-p
     while (u<f){
@@ -66,7 +64,7 @@ Nessa questão estamos contando o número de passos necessário para gerar um n�
 Contando 1:
 
 ```{r}
-poisson_c1=function(lambda,n){
+poisson_c1=function(lambda){
   u <- runif(1)
   i <- 0;p <- exp(-1*lambda);f <-p;cont <- 1
   while(u>=f){
@@ -82,7 +80,7 @@ Contando 2:
 
 ```{r}
 poisson_c2 <- function(lambda){
-  u <- runif(1);I <- as.integer(lambda); f <- ppois(I,lambda); passos <- 1
+  u <- runif(1); I <- as.integer(lambda); f <- ppois(I,lambda); passos <- 1
   if (u<f){
     i <- I; p <- dpois(i,lambda); f <- f-p
     while (u<f){
@@ -122,7 +120,31 @@ for (i in 1:1000){
 mean(x)
 ```
 
-Notamos que o número de ciclos usando poisson_c2 é bem menor do que o número de ciclos para gerar usando poisson_c1, além disso temos uma restrição quanto ao valor de lambda sendo que no primeiro m?todo (poisson_c1) não poderia ser muito grande sem um alto custo computacional( basta testar alguns casos para verificar um aumento na lentidão), já usando o segundo método essa restrição é menor.
+Notamos que o número de ciclos usando poisson_c2 é bem menor do que o número de ciclos para gerar usando poisson_c1, além disso temos uma restrição quanto ao valor de lambda sendo que no primeiro método (poisson_c1) não poderia ser muito grande sem um alto custo computacional( basta testar alguns casos para verificar um aumento na lentidão), já usando o segundo método essa restrição é menor.
+
+Montando o gráfico do número de interações por $\lambda$. Estou gerando vários números com uma distribuição de Poisson e vendo a media das interações de cada um dos algoritmos.
+
+```{r}
+a <- 0
+for (i in 1:20){
+  c <- 0
+  for (j in 1:100000){
+    c[j] <- poisson_c1(i)
+  }
+  a[i] <- mean(c)
+}
+b <- 0
+for (i in 1:20){
+  c <- 0
+  for (j in 1:10000){
+    c[j] <- poisson_c2(i)
+  }
+  b[i] <- mean(c)
+}
+
+plot(1:20,a,type='l',xlab=expression(lambda),ylab="Número de interações",col="blue",main="Comparando o número de interações")
+lines(1:20,b,type="l",col='red')
+```
 
 # 2-)
 
@@ -182,7 +204,7 @@ normal <- function(mu,sigma2){
   else {
     x <- y
   }
-  #Gerando uma normal sem ser padr?o
+  #Gerando uma normal sem ser padrão
   x <- sigma2*x + mu
   return(x)
 }
