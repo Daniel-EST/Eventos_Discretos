@@ -23,16 +23,14 @@ r_poissonG <- function(lambda){
       i <- i - 1 ; p <- dpois(i, lambda) ; f <- f - p
     }
     x <- i
-    int <- I - i + 1
   } else {
    i <- I +1 ; p <-  dpois(i, lambda) ; f <- f + p
    while(u >= f){
      i <- i + 1 ; p <- p * lambda/i ; f <- f + p
    }
    x <- i + 1
-   int <- i - I + 1
   }
-  return(c(x, int))
+  return(c(x, abs(I-i+1)))
 }
 r_poissonG(1000) # Primeira posição do vetor é o número gerado, a segunda o nú-
 # mero de interações.
