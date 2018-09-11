@@ -4,7 +4,10 @@ author: "Gabriel Mizuno"
 date: "11/09/2018"
 output: html_document
 ---
-
+<style>
+p    {text-align: justify;
+      text-justify: inter-word;}
+</style>
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -119,7 +122,7 @@ for (i in 1:1000){
 mean(x)
 ```
 
-Notamos que o número de ciclos usando poisson_c2 é bem menor do que o número de ciclos para gerar usando poisson_c1, além disso temos uma restrição quanto ao valor de lambda sendo que no primeiro m?todo (poisson_c1) não poderia ser muito grande sem um alto custo computacional( basta testar alguns casos para verificar um aumento na lentid?o), já usando o segundo m?todo essa restrição é menor.
+Notamos que o número de ciclos usando poisson_c2 é bem menor do que o número de ciclos para gerar usando poisson_c1, além disso temos uma restrição quanto ao valor de lambda sendo que no primeiro m?todo (poisson_c1) não poderia ser muito grande sem um alto custo computacional( basta testar alguns casos para verificar um aumento na lentidão), já usando o segundo método essa restrição é menor.
 
 # 2-)
 
@@ -161,8 +164,8 @@ expo <- function(lambda){
 }
 ```
 
-Vamos gerar primeiro normal padrão e dps com uma transformação teremos uma normal qualquer
-Vamos usar o método da rejeicao com $c=\frac{2e^{1/2}}{\sqrt(2\pi)}$ e $h(y)=e^{\frac{-(y-1)^2}{2}}$
+Vamos gerar primeiro normal padrão e depois com uma transformação teremos uma normal qualquer
+Vamos usar o método da rejeição com $c=\frac{2e^{1/2}}{\sqrt(2\pi)}$ e $h(y)=e^{\frac{-(y-1)^2}{2}}$
 
 ```{r}
 normal <- function(mu,sigma2){
