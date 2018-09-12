@@ -1,5 +1,5 @@
 ---
-title: "Trabalho de Simulação (corrigido)"
+title: "Trabalho de Simulação final"
 author: "Gabriel Mizuno"
 date: "11/09/2018"
 output: html_document
@@ -141,10 +141,14 @@ for (i in 1:20){
   }
   b[i] <- mean(c)
 }
+```
 
+Onde a linha azul representa no número de ciclos no algoritmo 1 e a vermelha do algoritmo 2.
+```{r}
 plot(1:20,a,type='l',xlab=expression(lambda),ylab="Número de interações",col="blue",main="Comparando o número de interações")
 lines(1:20,b,type="l",col='red')
 ```
+
 
 # 2-)
 
@@ -176,7 +180,7 @@ gerando_X <- function(p,q){
 
 ## b-)
 
-Vamos gerar um exponencial 1?
+Vamos gerar um exponencial 1
 
 ```{r}
 expo <- function(lambda){
@@ -208,6 +212,8 @@ normal <- function(mu,sigma2){
   x <- sigma2*x + mu
   return(x)
 }
+
+#Testando se esta correto
 
 a <- 0
 for (i in 1:1000){
