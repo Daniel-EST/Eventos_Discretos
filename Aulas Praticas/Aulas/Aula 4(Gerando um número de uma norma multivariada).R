@@ -33,7 +33,14 @@ normal <- function(mu,sigma2){
 
 normal_multi <- function(mu,Sigma){
   A <- chol(Sigma)
-  X <- A%*%Sigma+mu
+  Z <- 0
+  for (i in 1:length(mu)){
+    Z[i] <- normal(0,1)
+  }
+  X <- A%*%Z+mu
   return(X)
 }
 
+Sigma <- matrix(c(5,1,1,3),2,2)
+mu <- c(0,0)
+normal_multi(mu,Sigma)
