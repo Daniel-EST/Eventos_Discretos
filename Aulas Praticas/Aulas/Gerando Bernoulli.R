@@ -11,5 +11,11 @@ ber <- function(p){
   }
 }
 
-ber(1)
+ber(0.2)
+#Verificando se esta certo
+e <- 0
+for (i in 1:10000){
+  e[i] <- ber(0.2)
+}
+mean(e)
 
