@@ -32,6 +32,7 @@ normal <- function(mu,sigma2){
 #Tome cuidado na hora de colocar os valores de mu e Sigma
 
 normal_multi <- function(mu,Sigma){
+  #Decomposição de Cholesky
   A <- chol(Sigma)
   Z <- 0
   for (i in 1:length(mu)){
