@@ -1,10 +1,10 @@
-# Exercício aula 18/09/18
+# ExercÃ­cio aula 18/09/18
 # Gere Y v.a.
 qa <- function(x){
   t <- as.integer(3*runif(1)) + 1
   if(t == 1) return(runif(1)**(1))
   if(t == 2) return(runif(1)**(1/3))
-  else return(runif(1)**(1/5))
+  return(runif(1)**(1/5))
 }
 
 qb <- function(x){
@@ -13,7 +13,7 @@ qb <- function(x){
   return(runif(1))
 }
 
-# Exercício 12 (Cap 5)
+# ExercÃ­cio 12 (Cap 5)
 # Considere que x_i ~ Exp(1)
 q12 <- function(lambda,n){
   x <- NULL
@@ -24,7 +24,7 @@ q12 <- function(lambda,n){
 }
 q12(1, 100)
 
-# Exercício empresa
+# ExercÃ­cio empresa
 
 bern <- function(p){
   u <- runif(1)
