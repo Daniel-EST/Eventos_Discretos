@@ -41,5 +41,11 @@ custo <- function(lambda,n,p){
   custo <- sum(x)
   return(custo)
 }
-
 custo(1/800,1000,.05)
+
+#Verificnado se esta correto
+c <- 0
+for (i in 1:1000){
+  c[i] <- custo(1/800,1000,.05)
+}
+mean(c)
