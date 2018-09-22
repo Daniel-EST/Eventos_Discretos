@@ -23,10 +23,13 @@ unif <- function(n){
 #Simulando a quantidade de pessoas
 pessoas <- function(lambda){
   onibus <- pois(lambda); x <- 0
-  for (i in 1:0){
-    x[i] <- unif(21)
+  if (onibus>0){
+    for (i in 1:0){
+      x[i] <- unif(21)
+    }
+    return(sum(x))
   }
-  return(sum(x))
+  else{return(0)}
 }
 pessoas(5)
 
