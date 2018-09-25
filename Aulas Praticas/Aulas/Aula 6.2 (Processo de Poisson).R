@@ -21,6 +21,8 @@ poisson <- function(lambda){
     return(passos)
   }
 }
+
+#Função principal
 pois <- function(Tempo,lambda){
   N <- poisson(lambda*Tempo)
   u <- runif(N)

@@ -16,7 +16,7 @@ expo <- function(lambda){
 
 f <- function( ){
   u <- runif(1)
-  t <- as.integer(2*u)+1
+  t <- as.integer(3*u)+1
   if (t==1 | t==2){
     x <- expo(2)
     return(x)
