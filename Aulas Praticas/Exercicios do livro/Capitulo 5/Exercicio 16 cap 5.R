@@ -13,21 +13,21 @@ expo <- function(lambda){
 
 f <- function(lambda){
   y <- expo(lambda)
-  u <- runif(1)
-  print(u)
-  while (u>=y*(lambda-1)**2*exp(-y*(lambda-1)+2)/4){
+  u1 <- runif(1)
+  t <- y^2*exp(-y*(1-y))*(1-lambda)^2/(4*exp(-2))
+  while (u1>=t){
+    u1 <- runif(1)
     y <- expo(lambda)
-    u <- runif(1)
+    t <- y^2*exp(-y*(1-y))*(1-lambda)^2/(4*exp(-2))
   }
   x <- y
   return(x)
 }
-
+f(1/3)
 #Testando 
 
 b <- 0
-for (i in 1:100){
+for (i in 1:3000){
   b[i] <- f(1/3)
 }
-mean(a)
 mean(b)

@@ -34,6 +34,7 @@ f <- function( ){
 }
 
 #Testando o algoritmo
+
 e <- 0
 for (i in 1:100000){
   e[i] <- f( )
