@@ -7,5 +7,4 @@ a <- 0
 for (i in 1:10000){
   a[i] <- geometrica(0.1)
 }
-mean(a-1)
-mean(rgeom(10000,.1))
+mean(a)

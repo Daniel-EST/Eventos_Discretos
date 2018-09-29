@@ -1,16 +1,29 @@
-#Tentei fazer algo parecido com a distribuição de poisson
+#Vamos usar o metodo da Composição
 
-funcao=function(){
-  x <- 0
-  u <- runif(1)
-  i <- 1; p <- 5/12;f <-p
-  while(u>=f){
-    p <- p*(2**(-i-1)+2**(i-2)/3**i)/(2**(-i-2)+2**(i-1)/3**(i+1)); i <- i+1; f <- f+p
-  }
-  x <- i
+#Primeiro note que;
+#P(X=i)=.5*P1(X1=i)+.5*P2(X2=i), onde X1~Geo(.5) e X2~Geo(1/3)
+
+#Gerando Gerometricas
+geometrica <- function(p){
+  u1 <- runif(1)
+  x <- 1+as.integer(log(1-u1)/log(1-p))
   return(x)
 }
-funcao()
+
+
+funcao=function(){
+  u <- runif(1)
+  t <- as.integer(2*u)+1
+  #Se t=1 ==> X1 e se t=2 ==> X2
+  if (t==1){
+    x <- geometrica(.5)
+    return(x)
+  }
+  if (t==2){
+    x <- geometrica(1/3)
+    return(x)
+  }
+}
 
 #Testando para ver se esta certo
 
