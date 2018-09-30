@@ -23,7 +23,7 @@ f <- function(lambda){
   x <- y
   return(x)
 }
-f(1/3)
+
 #Testando 
 
 b <- 0
