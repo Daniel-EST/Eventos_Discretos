@@ -16,9 +16,9 @@ f <- function(lambda){
   u1 <- runif(1)
   t <- y^2*exp(-y*(1-lambda))*(1-lambda)^2/(4*exp(-2))
   while (u1>=t){
-    u1 <- runif(1)
     y <- expo(lambda)
-    t <- y^2*exp(-y+lambda*y+2)*(1-lambda)^2/4
+    u1 <- runif(1)
+    t <- y^2*exp(-y*(1-lambda))*(1-lambda)^2/(4*exp(-2))
   }
   x <- y
   return(x)
