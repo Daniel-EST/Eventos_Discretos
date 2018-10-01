@@ -13,5 +13,12 @@ X <- function(p,x){
 }
 x <- c(1:10)
 p <- c(rep(.06,time=5),.15,.13,.14,.15,.13); sum(p)
-X(p,x)
+
+#Testando
+
+e <- 0
+for (i in 1:10000){
+  e[i] <- X(p,x)
+}
+mean(e)
 

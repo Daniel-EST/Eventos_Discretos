@@ -1,4 +1,4 @@
-#Primeira ideia nao da para verificar se esta certo a funcao
+#Primeira ideia
 
 X <- function(p,x){
   u <- runif(1); s <- 0
@@ -10,7 +10,13 @@ X <- function(p,x){
     
   }
 }
-X(c(1/3,2/3),c(1,2))
+
+#Tentando
+e <- 0
+for (i in 1:10000){
+  e[i] <- X(c(1/3,2/3),c(1,2))
+}
+mean(e)
 
 #Segunda ideia 
 
