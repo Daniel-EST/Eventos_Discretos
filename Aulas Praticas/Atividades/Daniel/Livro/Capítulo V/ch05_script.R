@@ -1,8 +1,8 @@
-# Questão 1 ####
+# Questão 01 ####
 q1 <- function() return(log(runif(1)*(exp(1)-1) + 1))
 q1()
 
-# Questão 2 ####
+# Questão 02 ####
 q2 <- function(){
   if(runif(1)*6 <= 3){
     return(2 * (1 + sqrt(runif(1))))
@@ -12,16 +12,16 @@ q2 <- function(){
 }
 q2()
 
-# Questão 3 ####
+# Questão 03 ####
 q3 <- function() return((- 1 + sqrt(1 + 8 * runif(1)))/2)
 q3()
 
-# Questão 4 ####
+# Questão 04 ####
 
 q4 <- function(alpha, beta) return((log(1/runif(1))/alpha)**1/beta)
 q4(1,1)
 
-# Questão 5 ####
+# Questão 05 ####
 q5 <- function(){
   if(runif(1) < .5){
     return(log(2*runif(1))/2)
@@ -30,7 +30,7 @@ q5 <- function(){
   }
 }
 q5()
-# Questão 6 ####
+# Questão 06 ####
 q6 <- function() return(-log(1-runif(1)*(1-exp(-.05))))
 q6()
 
@@ -56,7 +56,11 @@ q10 <- function(){
   }
   return(sum(claim))
 }
-
+a <- 0
+for(i in 1:100){
+  a[i] <- q10()
+}
+mean(a)
 {
   n <- 0
   for(i in 1:100){
@@ -69,14 +73,18 @@ q10 <- function(){
   rm(list = c("n","prob","i"))
 }
 
-# Questão 12 ##### (teórica)
-
+# Questão 12 #####
 # a)
-# Sabemos que X_i, i = 1, ... ,n são independentes e possuem distribuição F_i
-# logo o produtório das F_i = F.
-# Basta simular n X_i's e multiplica-los. Fariamos usanod a inversa.
+q12 <- function(lambda,n){
+  x <- NULL
+  for(i in 1:n){
+    x[i] <- -log(1-runif(1))/lambda
+  }
+  return(max(x))
+}
+q12(1, 100)
 
-# b) Pegariamos o resultado anterior e aplicariamos essa transformação.
+# b) Dessa vez usaríamos o mínimo.
 
 # Questão 14 ####
 
@@ -97,10 +105,15 @@ q19a()
 
 # b)
 q19b <- function(){
-  u <- as.integer(2*runif(1)) + 1
-  if(u == 1) return(runif(1)/2)
-  return((runif(1)^2)/2)
+  if(runif(1) < .5) return(runif(1))
+  return((sqrt(runif(1))))
 }
 q19b()
 
+# c)
 
+# Questão 22 ####
+
+# Questão 23 ####
+
+# Questão 24 ####
