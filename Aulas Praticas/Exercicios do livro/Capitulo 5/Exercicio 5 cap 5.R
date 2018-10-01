@@ -1,20 +1,42 @@
-#Vamos usar o metodo da fun√ß√£o inversa.
+#Gerando Exponenciais
 
-f <- function( ){
+expo <- function(lambda){
   u <- runif(1)
-  if (u<1/2){
-    x <- log(2*u)/2
-  }
-  if (u>=1/2){
-    #nesse passo poderiamos trocar 1-u por u
-    x <- -log(2*(1-u))/2
-  }
+  y <- -log(1-u)/lambda
+  return(y)
+}
+
+#Vamos usar o Metodo da ComposiÁ„o
+#F1=... ==> exp(2)
+#F2=exp(2a)/2-1 ==> ???
+#Defiindo T uma v.a assumindo valores {1,2} ==> P(T=1)=1/2 e P(T=2)=1/2
+
+#Primeiro vamos gerar F2 pelo metodo da inversa
+F2 <- function( ){
+  u <- runif(1)
+  x <- log(u)/2
   return(x)
 }
 
-#Verificando se esta certo
-a <- 0
-for (i in 1:10000){
-  a[i] <- f( )
+#Gerando X
+
+f <- function( ){
+  u <- runif(1)
+  t <- as.integer(2*u)+1
+  if (t==1){
+    x <- expo(2)
+    return(x)
+  }
+  if (t==2){
+    x <- F2( )
+    return(x)
+  }
 }
-mean(a)
+
+#Testando o algoritmo
+
+e <- 0
+for (i in 1:100000){
+  e[i] <- f( )
+}
+mean(e)

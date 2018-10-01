@@ -1,5 +1,6 @@
-#Vamos estimar a esperanÁa X Px=c(1,2,3,4,5,6,5,4,3,2,1)/36
-#Vamos usar o mÈtodo da rejeiÁ„o e c=66/36 => h=6*Px
+#Vamos primeiro gerar $X$ com fun√ß√£o de probabidade dada por: $P_{x}=c(1,2,3,4,5,6,5,4,3,2,1)/36$
+#, e em seguida vamos estimar o q se pede no enunciado.   
+#Vamos usar o m√©todo da rejei√ß√£o e $c=\frac{66}{36}$ $\rightarrow$ $h=6P_{x}$.
 
 p <- c(1,2,3,4,5,6,5,4,3,2,1)/36; n <- c(2:12); e <- sum(p*n); e
 
