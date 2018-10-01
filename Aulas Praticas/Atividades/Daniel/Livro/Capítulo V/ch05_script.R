@@ -86,7 +86,7 @@ q12(1, 100)
 
 # b) Dessa vez usaríamos o mínimo.
 
-# Questão 14 ####
+# Questão 14 (não faço ideia como resolver) ####
 
 # a)
 # b)
@@ -105,12 +105,18 @@ q19a()
 
 # b)
 q19b <- function(){
-  if(runif(1) < .5) return(runif(1))
-  return((sqrt(runif(1))))
+  y <- runif(1)
+  while(runif(1) > (1+2*y)/3) y <- runif(1)
+  return(y)
 }
 q19b()
 
 # c)
+q19c <- function(){
+  if(runif(1) < .5) return(runif(1))
+  return((sqrt(runif(1))))
+}
+q19c()
 
 # Questão 22 ####
 
