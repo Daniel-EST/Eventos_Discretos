@@ -9,6 +9,7 @@ q3rej <- function(){
   }
   return(y)
 }
+q3rej()
 
 # Método da transformação inversa
 q3inv <- function(){
@@ -18,6 +19,7 @@ q3inv <- function(){
   if(u < 0.85) return(3)
   return(4)
 }
+q3inv()
 
 # Questão 04 ####
 # Criando uma função auxiliar para gerar bernoulli.
@@ -32,6 +34,7 @@ q4 <- function(){
   }
   return(hits)
 }
+q4()
 
 # Momentos
 E_x <- function(){
