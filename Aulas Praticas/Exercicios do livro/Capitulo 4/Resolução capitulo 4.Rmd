@@ -561,3 +561,8 @@ for (i in 1:100000){
 mean(x)
 ```
 
+##Exercicio 17
+![Solução](images/exercicio_17.jpg)
+
+##Exercicio 18
+![Solução](images/exercicio_18.jpg)
