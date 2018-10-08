@@ -16,6 +16,7 @@ f <- function(p){
       h <- 6*p[y]
       u2 <- runif(1)
     }
+    #Podeira substituir y <- n[y]
     n <- setdiff(n,y+1)
     x <- x+1
   }

@@ -28,7 +28,7 @@ mean(a)
 
 Usando Método da Rejeição
 
-Estou usando o metodo da rejeiço $Y\sim U(0,1)$ assim $c=\displaystyle\frac{e^{1}}{(e^y-1)}$ $\rightarrow$ $h(y)=e^y-1$.
+Estou usando o metodo da rejeiço $Y\sim U(0,1)$ assim $c=\displaystyle\frac{e^{1}}{(e^1-1)}$ $\rightarrow$ $h(y)=e^{y-1}$.
 ```{r}
 f1 <- function( ){
   y <- runif(1)
@@ -78,27 +78,22 @@ mean(a)
 
 ##Exercicio 3
 
-Estou usando o metodo da rejeição $Y\sim U(0,1)$ assim $c=\frac{e^{1}}{(e^{y}-1)}$ ==> $h=e^{y}-1$
+Vamos usar o metodo da função inversa.
 
 ```{r}
-f1 <- function( ){
-  y <- runif(1)
-  u1 <- runif(1)
-  while (u1>exp(y-1)){
-    y <- runif(1)
-    u1 <- runif(1)
-  }
-  x <- y
+f <- function( ){
+  u <- runif(1)
+  x <- (-1+sqrt(1+8*u))/2
   return(x)
 }
 
-#Verificando 
-
+#Verificando se esta certo
 a <- 0
 for (i in 1:10000){
-  a[i] <- f1( )
+  a[i] <- f( )
 }
 mean(a)
+
 ```
 
 ##Exercicio 4
@@ -156,9 +151,9 @@ expo <- function(lambda){
 }
 ```
 
-$F_{1}$=... ==> exp(2)
-$F_{2}=e^{2a}$ ==> ???
-Defiindo T uma v.a assumindo valores {1,2} ==> $\mathbb{P}(T=1)=1/2$ e $\mathbb{P}(T=2)=1/2$
+$F_{1}$=... ==> Exp(2)  
+$F_{2}=e^{2a}$ ==> ???  
+Defiindo T uma v.a assumindo valores {1,2} ==> $\mathbb{P}(T=1)=1/2$ e $\mathbb{P}(T=2)=1/2$  
 
 Primeiro vamos gerar $F_{2}$ pelo metodo da inversa
 

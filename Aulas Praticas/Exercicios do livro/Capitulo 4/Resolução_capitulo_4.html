@@ -152,17 +152,17 @@ $(document).ready(function () {
 <div id="item-a" class="section level1">
 <h1>Item A</h1>
 <pre class="r"><code>N(100)</code></pre>
-<pre><code>## [1] 0.42</code></pre>
+<pre><code>## [1] 0.27</code></pre>
 </div>
 <div id="item-b" class="section level1">
 <h1>Item B</h1>
 <pre class="r"><code>N(1000)</code></pre>
-<pre><code>## [1] 0.323</code></pre>
+<pre><code>## [1] 0.316</code></pre>
 </div>
 <div id="item-c" class="section level1">
 <h1>Item C</h1>
 <pre class="r"><code>N(10000)</code></pre>
-<pre><code>## [1] 0.3365</code></pre>
+<pre><code>## [1] 0.3381</code></pre>
 <div id="exercicio-2" class="section level2">
 <h2>Exercicio 2</h2>
 <p>Primeira ideia<br />
@@ -183,7 +183,7 @@ for (i in 1:10000){
   e[i] &lt;- X(c(1/3,2/3),c(1,2))
 }
 mean(e)</code></pre>
-<pre><code>## [1] 1.6702</code></pre>
+<pre><code>## [1] 1.6623</code></pre>
 <p>Na segunda ideia geramos uma quantidade <span class="math inline">\(n\)</span> de valores de <span class="math inline">\(X\)</span> e tiramos a média.</p>
 <pre class="r"><code>X2 &lt;- function(p,x,n){
   a &lt;- 0
@@ -200,7 +200,7 @@ mean(e)</code></pre>
   mean(a)
 }
 X2(c(1/3,2/3),c(1,2),100000)</code></pre>
-<pre><code>## [1] 1.66523</code></pre>
+<pre><code>## [1] 1.66757</code></pre>
 </div>
 <div id="exercicio-3" class="section level2">
 <h2>Exercicio 3</h2>
@@ -230,14 +230,14 @@ for (i in 1:100000){
   e[i] &lt;- f( )
 }
 mean(e)</code></pre>
-<pre><code>## [1] 2.34938</code></pre>
+<pre><code>## [1] 2.34425</code></pre>
 <pre class="r"><code># Método da rejeição.
 h &lt;- 0 
 for (i in 1:100000){
   h[i] &lt;- g()
 }
 mean(h)</code></pre>
-<pre><code>## [1] 2.34561</code></pre>
+<pre><code>## [1] 2.34974</code></pre>
 <p><details> <summary> Usando as funções do execicio anterior </summary></p>
 <pre class="r"><code>X &lt;- function(p,x){
   u &lt;- runif(1); s &lt;- p[1]
@@ -254,7 +254,7 @@ for (i in 1:10000){
   e[i] &lt;- X(c(.3,.2,.35,.15),c(1:4))
 }
 mean(e)</code></pre>
-<pre><code>## [1] 2.3102</code></pre>
+<pre><code>## [1] 2.3073</code></pre>
 <pre class="r"><code>X2 &lt;- function(p,x,n){
   a &lt;- 0
   for (j in 1:n){
@@ -270,7 +270,7 @@ mean(e)</code></pre>
   mean(a)
 }
 X2(c(.3,.2,.35,.15),c(1:4),100000)</code></pre>
-<pre><code>## [1] 2.35089</code></pre>
+<pre><code>## [1] 2.3552</code></pre>
 <p></details></p>
 </div>
 <div id="exercico-4" class="section level2">
@@ -302,15 +302,15 @@ for (j in 1:1000){
   x[j] &lt;- sum(a)
 }
 mean(x)</code></pre>
-<pre><code>## [1] 0.987</code></pre>
+<pre><code>## [1] 1.003</code></pre>
 </div>
 <div id="exercicio-7" class="section level2">
 <h2>Exercicio 7</h2>
 <p>Vamos primeiro gerar <span class="math inline">\(X\)</span> com função de probabidade dada por: <span class="math inline">\(P_{x}=c(1,2,3,4,5,6,5,4,3,2,1)/36\)</span>, e em seguida vamos estimar o q se pede no enunciado.</p>
 <p>Vamos usar o método da rejeição e <span class="math inline">\(c=\frac{66}{36}\)</span> <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(h=6P_{x}\)</span>.</p>
-<pre class="r"><code>p &lt;- c(1,2,3,4,5,6,5,4,3,2,1)/36; n &lt;- c(2:12); e &lt;- sum(p*n); e</code></pre>
-<pre><code>## [1] 7</code></pre>
-<pre class="r"><code>f &lt;- function(p){
+<pre class="r"><code>p &lt;- c(1,2,3,4,5,6,5,4,3,2,1)/36; n &lt;- c(2:12)
+
+f &lt;- function(p){
   n &lt;- c(2:12); x &lt;- 0
   while(sum(n)&gt;0){
     u1 &lt;- runif(1); u2 &lt;- runif(1)
@@ -328,7 +328,7 @@ mean(x)</code></pre>
   return(x)
 }
 f(p)</code></pre>
-<pre><code>## [1] 45</code></pre>
+<pre><code>## [1] 86</code></pre>
 <pre class="r"><code>#Testando 
 
 x &lt;- 0
@@ -336,7 +336,7 @@ for (i in 1:1000){
   x[i] &lt;- f(p)
 }
 mean(x)</code></pre>
-<pre><code>## [1] 60.622</code></pre>
+<pre><code>## [1] 61.167</code></pre>
 </div>
 <div id="exercico-10" class="section level2">
 <h2>Exercico 10</h2>
@@ -357,14 +357,14 @@ bio_neg &lt;- function(p,r){
   return(sum(y))
 }
 bio_neg(0.1,4)</code></pre>
-<pre><code>## [1] 66</code></pre>
+<pre><code>## [1] 15</code></pre>
 <pre class="r"><code>#Verificando se esta correto
 a &lt;- 0
 for (i in 1:10000){
   a[i] &lt;- bio_neg(0.1,4)
 }
 mean(a)</code></pre>
-<pre><code>## [1] 39.7864</code></pre>
+<pre><code>## [1] 40.2985</code></pre>
 </div>
 <div id="item-c-1" class="section level3">
 <h3>Item C</h3>
@@ -380,14 +380,14 @@ mean(a)</code></pre>
   return(x)
 }
 bio_neg2(0.1,4)</code></pre>
-<pre><code>## [1] 22</code></pre>
+<pre><code>## [1] 51</code></pre>
 <pre class="r"><code>#Verificando se esta correto
 a &lt;- 0
 for (i in 1:10000){
   a[i] &lt;- bio_neg2(0.1,4)
 }
 mean(a)</code></pre>
-<pre><code>## [1] 40.1692</code></pre>
+<pre><code>## [1] 40.0834</code></pre>
 </div>
 </div>
 <div id="exercicio-11" class="section level2">
@@ -429,7 +429,7 @@ for (i in 1:100000){
   e[i] &lt;- Z( )
 }
 mean(e)</code></pre>
-<pre><code>## [1] 0.7992116</code></pre>
+<pre><code>## [1] 0.795832</code></pre>
 </div>
 <div id="exercico-13" class="section level2">
 <h2>Exercico 13</h2>
@@ -455,7 +455,7 @@ for (i in 1:1000){
  e[i] &lt;- f(3,.5,1,.5) 
 }
 mean(e)</code></pre>
-<pre><code>## [1] 1.254</code></pre>
+<pre><code>## [1] 1.247</code></pre>
 </div>
 <div id="item-b-1" class="section level3">
 <h3>ITEM B</h3>
@@ -542,11 +542,11 @@ for (i in 1:10000){
   e[i] &lt;- X(p,x)
 }
 mean(e)</code></pre>
-<pre><code>## [1] 9.4852</code></pre>
+<pre><code>## [1] 9.4464</code></pre>
 </div>
 <div id="exercicio-15" class="section level2">
 <h2>Exercicio 15</h2>
-<p>Usando a função do exercicio 2 desse capitulo Sabemos que a esperança verdadeira é 6.48</p>
+<p>Usando a função do exercicio 2 desse capitulo Sabemos que a esperança verdadeira é 6.48. Não foi usado o método da composição</p>
 <pre class="r"><code>X &lt;- function(p,x){
   u &lt;- runif(1); s &lt;- 0
   for (i in 1:length(p)){
@@ -567,7 +567,7 @@ for (i in 1:10000){
   e[i] &lt;- X(p,x)
 }
 mean(e)</code></pre>
-<pre><code>## [1] 6.4871</code></pre>
+<pre><code>## [1] 6.5356</code></pre>
 </div>
 <div id="exercico-16" class="section level2">
 <h2>Exercico 16</h2>
@@ -603,7 +603,7 @@ for (i in 1:100000){
   x[i] &lt;- funcao()
 }
 mean(x)</code></pre>
-<pre><code>## [1] 2.49419</code></pre>
+<pre><code>## [1] 2.4949</code></pre>
 </div>
 </div>
 
