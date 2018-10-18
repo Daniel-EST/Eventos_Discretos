@@ -226,7 +226,8 @@ n <- 4; s <- 3; X <- expo2(1,n)
 t <- sort(X); tr <- Inf; r <- 0
 
 #Començando
-while(r<s+1){
+f <- function( ){
+  while(r<s+1){
   if (t[1]<tr){
     t <- t[1]; r <- r+1
     if (r<s+1){
@@ -246,6 +247,13 @@ while(r<s+1){
 }
 
 tc <- t
-print(t)
+return(t)
+}
+
+e <- 0
+for(i in 1:1000){
+  e[i] <- f( )
+}
+mean(e)
 ```
 
