@@ -140,7 +140,7 @@ repair_model <- function(n, s, lambda_1, lambda_2){
 repair_model(4, 3, 1 ,2)
 
 rm_m <- NULL
-for(i in 1:1000){
+for(i in 1:100){
   rm_m[i] <- repair_model(4, 3, 1, 2)
 }
 mean(rm_m)
