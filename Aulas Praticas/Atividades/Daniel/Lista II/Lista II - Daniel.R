@@ -6,6 +6,24 @@ expr <- function(lambda){
   return(-1*log(u)/lambda)
 }
 
+exprn <- function(n,lambda){
+  exp <- NULL
+  for(i in 1:n){
+    exp[i] <- expr(lambda)
+  }
+  return(exp)
+}
+
+poisson <- function(lambda){
+  x <- 0
+  u <- runif(1)
+  i <- 0; p <- exp(-1*lambda); f <-p
+  while(u>=f){
+    i <- i+1;p <- p*lambda/i;f <- f+p
+  }
+  return(i)
+}
+
 # Questão I #### 
 
 # Simulando processo de poisson não homogêneo. 
@@ -18,8 +36,6 @@ poisproc <- function(lambda, s){
   }
   return(t)
 }
-
-############# DEPOIS DAQUI A MERDA ACONTECE ###############################
 
 # Simulando processo de fila. 
 series_queue <- function(lambda, lambda_1, lambda_2, Time){
@@ -57,8 +73,8 @@ series_queue <- function(lambda, lambda_1, lambda_2, Time){
     }
   }
   while(Nd!=Na){
-    Nd <- Nd+1
-    D[Nd] <- t+expr(3)
+    Nd <- Nd + 1
+    D[Nd] <- t + expr(lambda_2)
   }
   A1 <- A1[-Na] ; D <- D[-Nd]
   return(list(Chegada = A1, `Saída` = D, mean.perm = mean(D - A1)))
@@ -66,6 +82,29 @@ series_queue <- function(lambda, lambda_1, lambda_2, Time){
 
 tm <- 0
 for(i in 1:1000){
-  tm[i] <- series_queue(3,1,3,100)$mean.perm
+  tm[i] <- series_queue(7,1,3,100)$mean.perm
 }
 mean(tm)
+
+# Questão 2 ####
+
+lucro_dia <- function(lambda){
+  n <- poisson(lambda)
+  custo_dia <- exprn(n, 1/1000)
+  return(11000 - sum(custo_dia))
+}
+
+lucro_ano <- function(lambda){
+  custo_ano <- NULL
+  for(i in 1:365){
+    custo_ano[i] <- lucro_dia(lambda)
+  }
+  lucro_ano <- 25000 + sum(custo_ano)
+  return(lucro_ano)
+}
+
+l_m <- 0
+for(i in 1:100){
+  l_m[i] <- lucro_ano(10)
+}
+mean(l_m)
