@@ -140,7 +140,7 @@ for (i in 1:10000){
   a[i] &lt;- f( )
 }
 mean(a)</code></pre>
-<pre><code>## [1] 0.5807411</code></pre>
+<pre><code>## [1] 0.5812334</code></pre>
 <p>Usando Método da Rejeição</p>
 <p>Estou usando o metodo da rejeiço <span class="math inline">\(Y\sim U(0,1)\)</span> assim <span class="math inline">\(c=\displaystyle\frac{e^{1}}{(e^1-1)}\)</span> <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(h(y)=e^{y-1}\)</span>.</p>
 <pre class="r"><code>f1 &lt;- function( ){
@@ -160,7 +160,7 @@ for (i in 1:10000){
   a[i] &lt;- f1( )
 }
 mean(a)</code></pre>
-<pre><code>## [1] 0.5809373</code></pre>
+<pre><code>## [1] 0.5786175</code></pre>
 </div>
 <div id="exercicio-2" class="section level2">
 <h2>Exercicio 2</h2>
@@ -183,7 +183,7 @@ for (i in 1:10000){
   a[i] &lt;- f( )
 }
 mean(a)</code></pre>
-<pre><code>## [1] 3.672523</code></pre>
+<pre><code>## [1] 3.672272</code></pre>
 </div>
 <div id="exercicio-3" class="section level2">
 <h2>Exercicio 3</h2>
@@ -200,7 +200,7 @@ for (i in 1:10000){
   a[i] &lt;- f( )
 }
 mean(a)</code></pre>
-<pre><code>## [1] 0.5773143</code></pre>
+<pre><code>## [1] 0.5797541</code></pre>
 </div>
 <div id="exercicio-4" class="section level2">
 <h2>Exercicio 4</h2>
@@ -217,7 +217,7 @@ for (i in 1:10000){
   a[i] &lt;- f(1,1)
 }
 mean(a)</code></pre>
-<pre><code>## [1] 1.01542</code></pre>
+<pre><code>## [1] 1.00116</code></pre>
 </div>
 <div id="exercicio-5" class="section level2">
 <h2>Exercicio 5</h2>
@@ -240,7 +240,7 @@ for (i in 1:100000){
   a[i] &lt;- f( )
 }
 mean(a)</code></pre>
-<pre><code>## [1] -0.003325943</code></pre>
+<pre><code>## [1] 0.003585195</code></pre>
 <p>Vamos usar o Metodo da Composição</p>
 <p>Gerando Exponenciais</p>
 <pre class="r"><code>expo &lt;- function(lambda){
@@ -278,7 +278,7 @@ for (i in 1:100000){
   e[i] &lt;- f( )
 }
 mean(e)</code></pre>
-<pre><code>## [1] -0.001824535</code></pre>
+<pre><code>## [1] -0.0006875738</code></pre>
 </div>
 <div id="exercicio-6" class="section level2">
 <h2>Exercicio 6</h2>
@@ -296,7 +296,7 @@ for (i in 1:100000){
   a[i] &lt;- f( )
 }
 mean(a)</code></pre>
-<pre><code>## [1] 0.02477317</code></pre>
+<pre><code>## [1] 0.02479771</code></pre>
 </div>
 <div id="exercicio-8" class="section level2">
 <h2>Exercicio 8</h2>
@@ -333,7 +333,7 @@ for (i in 1:100000){
   e[i] &lt;- f( )
 }
 mean(e)</code></pre>
-<pre><code>## [1] 0.6953291</code></pre>
+<pre><code>## [1] 0.695469</code></pre>
 <div id="exercicio-12" class="section level3">
 <h3>Exercicio 12</h3>
 </div>
@@ -376,7 +376,7 @@ for (i in 1:50000){
   b[i] &lt;- f(1/3)
 }
 mean(b)</code></pre>
-<pre><code>## [1] 2.984443</code></pre>
+<pre><code>## [1] 3.004173</code></pre>
 </div>
 <div id="exercicio-17" class="section level2">
 <h2>Exercicio 17</h2>
@@ -402,7 +402,7 @@ for (i in 1:1000){
   e[i] &lt;- f( )
 }
 mean(e)</code></pre>
-<pre><code>## [1] 0.5049508</code></pre>
+<pre><code>## [1] 0.5084943</code></pre>
 </div>
 <div id="exercicio-18" class="section level2">
 <h2>Exercicio 18</h2>
@@ -433,7 +433,7 @@ mean(e)</code></pre>
    e[i] &lt;- f( )
  }
  mean(e)</code></pre>
-<pre><code>## [1] 0.8411503</code></pre>
+<pre><code>## [1] 0.8413874</code></pre>
 </div>
 <div id="exercicio-19" class="section level2">
 <h2>Exercicio 19</h2>
@@ -458,7 +458,7 @@ for (i in 1:10000){
   e[i] &lt;- pois(5,2)
 }
 mean(e)</code></pre>
-<pre><code>## [1] 10.0143</code></pre>
+<pre><code>## [1] 10.0195</code></pre>
 </div>
 <div id="exercicio-24" class="section level2">
 <h2>Exercicio 24</h2>
@@ -485,7 +485,7 @@ e <span class="math inline">\(Y\)</span>=“Quantidade de onibus que chegam”<s
 <pre class="r"><code>pessoas &lt;- function(lambda){
   onibus &lt;- pois(lambda); x &lt;- 0
   if (onibus&gt;0){
-    for (i in 1:0){
+    for (i in 1:onibus){
       x[i] &lt;- unif(21)
     }
     return(sum(x))
@@ -493,14 +493,14 @@ e <span class="math inline">\(Y\)</span>=“Quantidade de onibus que chegam”<s
   else{return(0)}
 }
 pessoas(5)</code></pre>
-<pre><code>## [1] 28</code></pre>
+<pre><code>## [1] 125</code></pre>
 <pre class="r"><code>#Testando
 e &lt;- 0
 for (i in 1:1000){
   e[i] &lt;- pessoas(5)
 }
 mean(e)</code></pre>
-<pre><code>## [1] 30.697</code></pre>
+<pre><code>## [1] 155.642</code></pre>
 </div>
 
 

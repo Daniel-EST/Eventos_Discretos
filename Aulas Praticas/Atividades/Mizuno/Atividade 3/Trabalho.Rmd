@@ -1,0 +1,251 @@
+---
+title: "Trabalho Simulação"
+author: "Gabriel Mizuno"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+#Funções Auxiliares
+
+```{r}
+expo <- function(lambda){
+  u <- runif(1)
+  y <- -log(1-u)/lambda
+  return(y)
+}
+```
+
+```{r}
+expo2 <- function(lambda,n){
+  X <- 0
+  for (i in 1:n){
+    X[i] <- expo(lambda)
+  }
+  return(X)
+}
+```
+
+#Sistema de Fila em Sequencia
+Definindo as variaveis do problema:
+
+SS=c(n1,n2)  
+$N_A$=Número de chegada ate tempo t  
+$N_D$=Número de saidas ate tempo t  
+$A_1(n)$=Tempo de chegada do $n$-esimo cliente no servidor 1 (A1)  
+$A_2(n)$=Tempo de chegadado $n$-esimo cliente no servidor 2 (A2)  
+$D(n)$=Tempo de saida do $n$-esimo cliente do sistema (D)  
+$t_a$=Tempo da proxima chegada  
+$t_1$  
+$t_2$  
+$G_1$=Tempo gasto do cliente atualmente no servidor 1$\sim$Exp(1) (G1)    
+$G_2$=Tempo gasto do cliente atualmente no servidor 2$\sim$Exp(3) (G2)   
+$T$=Tempo de analise  
+$\lambda(t)$=3+$\frac{4}{t+1}$, se $t\geq 0$
+
+Definidas as variaveis vamos implementar o algoritmo
+ q
+###Implementando Subrotina para esse problema
+
+```{r}
+#Tempo de chegada de um processo poisson não homogeneo apos S
+
+#lambda_t=lambda(t)
+
+t_s <- function(lambda,s){
+  t <- s
+  u2 <- runif(1)
+  lambda_t <- 3+4/(t+1)
+  t <- t+expo(lambda)
+  while (u2>lambda_t/lambda){
+    t <- t+expo(lambda)
+    u2 <- runif(1)
+  }
+  t_s <- t
+  return(t_s)
+}
+```
+
+```{r}
+series_queue <- function(Time){
+  t <- 0; Na <- 0; Nd <- 0; n1 <- 0; n2 <- 0; A1 <- 0; A2 <- 0; D <- 0
+  ta <- t_s(7, 0) ; t1 <- Inf ; t2 <- Inf
+  while(t <= Time){
+    # CASO 1
+    if(ta == min(ta, t1, t2)){
+      t <- ta; Na <- Na + 1;  n1 <- n1 + 1
+      ta <- t_s(7, t) 
+      if(n1 == 1) {
+        t1 <- t + expo(1)
+      }
+      A1[Na] <- t
+    }
+    # CASO 2
+    if(t1 < ta & t1 <= t2){
+      t <-  t1
+      n1 <- n1 - 1 ; n2 <- n2 + 1
+      if(n1 == 0){
+        t1 <- Inf
+      } else {
+        t1 <- t + expo(1)
+      }
+      if(n2 == 1) {
+        t2 <- t + expo(3)
+      }
+      A2[Na - n1] <- t
+    }
+    if(t2 < ta & t2 < t1){
+      t <- t2
+      Nd <- Nd + 1
+      n2 <- n2 - 1
+      if(n2 == 0) {
+        t2 <- Inf
+      }
+      if(n2 > 0) {
+        t2 <- t + expo(3)
+      }
+      D[Nd] <- t
+    }
+  }
+  while(Nd!=Na){
+    Nd <- Nd+1
+    D[Nd] <- t+expo(3)
+  }
+  A1 <- A1[-Na] ; D <- D[-Nd]
+  return(list(Chegada = A1, `Saída` = D, mean.perm = mean(D - A1)))
+}
+
+tm <- 0
+for(i in 1:1000){
+  tm[i] <- series_queue(100)$mean.perm
+}
+mean(tm)
+```
+
+
+#Modelo de risco de seguro
+
+Definindo as variaveis do problema:  
+
+$T$="Tempo de analise"$=365$ dias  
+$a_0$="capital inicial"$=25000$  
+$t_e$="Tempo do proximo evento"  
+$n_0$="Número inicial de clientes"=???????   
+$J = \left\{
+\begin{array}{lll}
+\ 1 & \hbox{, se chega um novo segurando}\\
+\ 2 & \hbox{, se perde um segurado}\\
+\ 3 & \hbox{, se requere o seguro}
+\end{array}
+\right.$  
+Chegada de novos segurados$\sim$Pois(???????)  
+Chegada de reivindicações$\sim$Pois(10)  
+Valor reivindicado$\sim$ Exp($\frac{1}{1000}$)   
+Saida segurados$\sim$Pois(???????)   
+$\mathbb{P}(J=1)=$ e $\mathbb{P}(J=2)=$ e $\mathbb{P}(J=3)=$  
+$I = \left\{
+\begin{array}{ll}
+\ 1 & \hbox{, se o capital for não-negativo}\\
+\ 0 & \hbox{, caso contrario}
+\end{array}
+\right.$ 
+  
+Definidas as variavies vamos implementar o algoritmo
+
+Simulando a quantidade de reivindicações dos segurados
+```{r}
+pois <- function(lambda){
+  u <- runif(1)
+  t <- -log(1-u)/lambda; N <- 0
+  while (t<1) {
+    N <- N+1; u <- runif(1)
+    t <- t+(-log(1-u)/lambda)
+  }
+  return(N)
+}
+```
+
+Vendo o lucro de um dia de operação
+
+```{r}
+lucro <- function(lambda1,lambda2){
+  r <- pois(lambda1)
+  vr <- expo2(lambda2,r)
+  L <- 11000-sum(vr)
+  return(L)
+}
+```
+
+Vendo o lucro anual
+
+```{r}
+anual <- function(lambda1,lambda2){
+  d <- 0
+  for (i in 1:365){
+    d[i] <- lucro(lambda1,lambda2)
+  }
+  anual <- d+25000
+  anual[anual>0] <- 1
+  anual[anual<0] <- 0
+  return(mean(anual))
+}
+anual(10,1/1000)
+```
+
+Estimando a probabilidade de ter lucro num ano
+
+```{r}
+e <- 0
+for (i in 1:1000){
+  e[i] <- anual(10,1/1000)
+}
+mean(e)
+```
+
+
+#Modelo de Reparo
+Definindo as variaveis do problema: 
+
+$t_i$ tempo de quebra da maquina    
+$t$=vetor ordenado de $t_i$  
+$tr$ tempo que a maquina termina o reparo  
+$n$=total de maquinas em uso=4  
+$s$=total de maquina na reserva=3    
+$r$=número de maquinas quebradas  
+$F\sim$Exp(1), $G\sim$Exp(2)   
+
+```{r}
+#Iniciando
+n <- 4; s <- 3; X <- expo2(1,n)
+t <- sort(X); tr <- Inf; r <- 0
+
+#Començando
+while(r<s+1){
+  if (t[1]<tr){
+    t <- t[1]; r <- r+1
+    if (r<s+1){
+      x <- expo(1); t <- sort(c(t[2:n],x))
+    }
+    if (r==1){
+      tr <- t+expo(2)
+    }
+  }
+  else{
+    t <- tr; r <- r-1
+    if(r>0){
+      tr <- t+expo(2)
+    }
+    else {tr <- Inf}
+  }
+}
+
+tc <- t
+print(t)
+```
+

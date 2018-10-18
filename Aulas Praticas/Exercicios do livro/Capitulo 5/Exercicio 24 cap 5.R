@@ -24,7 +24,7 @@ unif <- function(n){
 pessoas <- function(lambda){
   onibus <- pois(lambda); x <- 0
   if (onibus>0){
-    for (i in 1:0){
+    for (i in 1:onibus){
       x[i] <- unif(21)
     }
     return(sum(x))
