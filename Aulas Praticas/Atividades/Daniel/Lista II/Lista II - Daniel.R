@@ -29,7 +29,7 @@ poisson <- function(lambda){
 # Simulando processo de poisson não homogêneo. 
 poisproc <- function(lambda, s){
   t <- s
-  lambda_t <- (3+4/t+1)
+  lambda_t <- (3+4/(t+1))
   t <- t + expr(lambda)
   while(runif(1) > lambda_t*1/7){
     t <- t + expr(lambda)
@@ -81,7 +81,7 @@ series_queue <- function(lambda, lambda_1, lambda_2, Time){
 }
 
 tm <- 0
-for(i in 1:1000){
+for(i in 1:100){
   tm[i] <- series_queue(7,1,3,100)$mean.perm
 }
 mean(tm)
@@ -108,3 +108,39 @@ for(i in 1:100){
   l_m[i] <- lucro_ano(10)
 }
 mean(l_m)
+
+# Questão 3 ####
+repair_model <- function(n, s, lambda_1, lambda_2){
+  t <- 0 ; r <- 0 ; t_ <- Inf
+  x <- exprn(n,lambda_1) ; x <- sort(x)
+  while(r < s + 1){
+    if(x[1] < t_){
+      t <- x[1] ; r <- r + 1
+      if(r < s + 1) {
+        X <- expr(lambda_1)
+        x <- x[-1]
+        x <- sort(c(x, t + X))
+      }
+      if(r == 1){
+        R <- expr(lambda_2)
+        t_ <- t + R
+      }
+    } else {
+      t <- t_ ; r <- r - 1
+      if(r > 0){
+        R <- expr(lambda_2)
+        t_ <- t + R
+      } else {
+        t_ <- Inf
+      }
+    }
+  }
+  return(t)
+}
+repair_model(4, 3, 1 ,2)
+
+rm_m <- NULL
+for(i in 1:100){
+  rm_m[i] <- repair_model(4, 3, 1, 2)
+}
+mean(rm_m)
