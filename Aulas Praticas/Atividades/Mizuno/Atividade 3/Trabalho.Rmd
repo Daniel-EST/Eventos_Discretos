@@ -221,12 +221,10 @@ $r$=número de maquinas quebradas
 $F\sim$Exp(1), $G\sim$Exp(2)   
 
 ```{r}
-#Iniciando
-n <- 4; s <- 3; X <- expo2(1,n)
-t <- sort(X); tr <- Inf; r <- 0
-
-#Començando
 f <- function( ){
+  #Iniciando
+  n <- 4; s <- 3; X <- expo2(1,n)
+  t <- sort(X); tr <- Inf; r <- 0
   while(r<s+1){
   if (t[1]<tr){
     t <- t[1]; r <- r+1

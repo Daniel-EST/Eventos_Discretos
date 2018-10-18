@@ -12,7 +12,7 @@
 
 <meta name="author" content="Gabriel Mizuno" />
 
-<meta name="date" content="2018-10-17" />
+<meta name="date" content="2018-10-18" />
 
 <title>Trabalho Simulação</title>
 
@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <section class="page-header">
 <h1 class="title toc-ignore project-name">Trabalho Simulação</h1>
 <h4 class="author project-author">Gabriel Mizuno</h4>
-<h4 class="date project-date">2018-10-17</h4>
+<h4 class="date project-date">2018-10-18</h4>
 </section>
 
 
@@ -178,7 +178,7 @@ tm &lt;-<span class="st"> </span><span class="dv">0</span>
   tm[i] &lt;-<span class="st"> </span><span class="kw">series_queue</span>(<span class="dv">100</span>)<span class="op">$</span>mean.perm
 }
 <span class="kw">mean</span>(tm)</code></pre></div>
-<pre><code>## [1] 36.75409</code></pre>
+<pre><code>## [1] 36.8174</code></pre>
 </div>
 <div id="modelo-de-risco-de-seguro" class="section level1">
 <h1>Modelo de risco de seguro</h1>
@@ -224,14 +224,14 @@ Saida segurados<span class="math inline">\(\sim\)</span>Pois(???????)<br />
   <span class="kw">return</span>(<span class="kw">mean</span>(anual))
 }
 <span class="kw">anual</span>(<span class="dv">10</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">1000</span>)</code></pre></div>
-<pre><code>## [1] 0.9972603</code></pre>
+<pre><code>## [1] 1</code></pre>
 <p>Estimando a probabilidade de ter lucro num ano</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e &lt;-<span class="st"> </span><span class="dv">0</span>
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>){
   e[i] &lt;-<span class="st"> </span><span class="kw">anual</span>(<span class="dv">10</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">1000</span>)
 }
 <span class="kw">mean</span>(e)</code></pre></div>
-<pre><code>## [1] 0.9999863</code></pre>
+<pre><code>## [1] 0.9999753</code></pre>
 </div>
 <div id="modelo-de-reparo" class="section level1">
 <h1>Modelo de Reparo</h1>
@@ -243,12 +243,10 @@ Saida segurados<span class="math inline">\(\sim\)</span>Pois(???????)<br />
 <span class="math inline">\(s\)</span>=total de maquina na reserva=3<br />
 <span class="math inline">\(r\)</span>=número de maquinas quebradas<br />
 <span class="math inline">\(F\sim\)</span>Exp(1), <span class="math inline">\(G\sim\)</span>Exp(2)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Iniciando</span>
-n &lt;-<span class="st"> </span><span class="dv">4</span>; s &lt;-<span class="st"> </span><span class="dv">3</span>; X &lt;-<span class="st"> </span><span class="kw">expo2</span>(<span class="dv">1</span>,n)
-t &lt;-<span class="st"> </span><span class="kw">sort</span>(X); tr &lt;-<span class="st"> </span><span class="ot">Inf</span>; r &lt;-<span class="st"> </span><span class="dv">0</span>
-
-<span class="co">#Començando</span>
-f &lt;-<span class="st"> </span><span class="cf">function</span>( ){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span><span class="cf">function</span>( ){
+  <span class="co">#Iniciando</span>
+  n &lt;-<span class="st"> </span><span class="dv">4</span>; s &lt;-<span class="st"> </span><span class="dv">3</span>; X &lt;-<span class="st"> </span><span class="kw">expo2</span>(<span class="dv">1</span>,n)
+  t &lt;-<span class="st"> </span><span class="kw">sort</span>(X); tr &lt;-<span class="st"> </span><span class="ot">Inf</span>; r &lt;-<span class="st"> </span><span class="dv">0</span>
   <span class="cf">while</span>(r<span class="op">&lt;</span>s<span class="op">+</span><span class="dv">1</span>){
   <span class="cf">if</span> (t[<span class="dv">1</span>]<span class="op">&lt;</span>tr){
     t &lt;-<span class="st"> </span>t[<span class="dv">1</span>]; r &lt;-<span class="st"> </span>r<span class="op">+</span><span class="dv">1</span>
@@ -277,7 +275,7 @@ e &lt;-<span class="st"> </span><span class="dv">0</span>
   e[i] &lt;-<span class="st"> </span><span class="kw">f</span>( )
 }
 <span class="kw">mean</span>(e)</code></pre></div>
-<pre><code>## [1] 0.6033877</code></pre>
+<pre><code>## [1] 0.6331491</code></pre>
 </div>
 </section>
 
