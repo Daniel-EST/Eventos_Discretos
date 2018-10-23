@@ -12,7 +12,7 @@
 
 <meta name="author" content="Gabriel Mizuno" />
 
-<meta name="date" content="2018-10-18" />
+<meta name="date" content="2018-10-23" />
 
 <title>Trabalho Simulação</title>
 
@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <section class="page-header">
 <h1 class="title toc-ignore project-name">Trabalho Simulação</h1>
 <h4 class="author project-author">Gabriel Mizuno</h4>
-<h4 class="date project-date">2018-10-18</h4>
+<h4 class="date project-date">2018-10-23</h4>
 </section>
 
 
@@ -102,10 +102,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="math inline">\(A_2(n)\)</span>=Tempo de chegadado <span class="math inline">\(n\)</span>-esimo cliente no servidor 2 (A2)<br />
 <span class="math inline">\(D(n)\)</span>=Tempo de saida do <span class="math inline">\(n\)</span>-esimo cliente do sistema (D)<br />
 <span class="math inline">\(t_a\)</span>=Tempo da proxima chegada<br />
-<span class="math inline">\(t_1\)</span><br />
-<span class="math inline">\(t_2\)</span><br />
-<span class="math inline">\(G_1\)</span>=Tempo gasto do cliente atualmente no servidor 1<span class="math inline">\(\sim\)</span>Exp(1) (G1)<br />
-<span class="math inline">\(G_2\)</span>=Tempo gasto do cliente atualmente no servidor 2<span class="math inline">\(\sim\)</span>Exp(3) (G2)<br />
+<span class="math inline">\(t_1\)</span>=Tempo gasto do cliente atualmente no servidor 1<span class="math inline">\(\sim\)</span>Exp(1) (G1)<br />
+<span class="math inline">\(t_2\)</span>=Tempo gasto do cliente atualmente no servidor 2<span class="math inline">\(\sim\)</span>Exp(3) (G2)<br />
 <span class="math inline">\(T\)</span>=Tempo de analise<br />
 <span class="math inline">\(\lambda(t)\)</span>=3+<span class="math inline">\(\frac{4}{t+1}\)</span>, se <span class="math inline">\(t\geq 0\)</span></p>
 <p>Definidas as variaveis vamos implementar o algoritmo q ###Implementando Subrotina para esse problema</p>
@@ -128,10 +126,13 @@ t_s &lt;-<span class="st"> </span><span class="cf">function</span>(lambda,s){
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">series_queue &lt;-<span class="st"> </span><span class="cf">function</span>(Time){
   t &lt;-<span class="st"> </span><span class="dv">0</span>; Na &lt;-<span class="st"> </span><span class="dv">0</span>; Nd &lt;-<span class="st"> </span><span class="dv">0</span>; n1 &lt;-<span class="st"> </span><span class="dv">0</span>; n2 &lt;-<span class="st"> </span><span class="dv">0</span>; A1 &lt;-<span class="st"> </span><span class="dv">0</span>; A2 &lt;-<span class="st"> </span><span class="dv">0</span>; D &lt;-<span class="st"> </span><span class="dv">0</span>
   ta &lt;-<span class="st"> </span><span class="kw">t_s</span>(<span class="dv">7</span>, <span class="dv">0</span>) ; t1 &lt;-<span class="st"> </span><span class="ot">Inf</span> ; t2 &lt;-<span class="st"> </span><span class="ot">Inf</span>
-  <span class="cf">while</span>(t <span class="op">&lt;=</span><span class="st"> </span>Time){
+  <span class="co">#browser()</span>
+  <span class="cf">while</span>(ta <span class="op">&lt;=</span><span class="st"> </span>Time){
     <span class="co"># CASO 1</span>
     <span class="cf">if</span>(ta <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(ta, t1, t2)){
-      t &lt;-<span class="st"> </span>ta; Na &lt;-<span class="st"> </span>Na <span class="op">+</span><span class="st"> </span><span class="dv">1</span>;  n1 &lt;-<span class="st"> </span>n1 <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+      t &lt;-<span class="st"> </span>ta
+      Na &lt;-<span class="st"> </span>Na <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+      n1 &lt;-<span class="st"> </span>n1 <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
       ta &lt;-<span class="st"> </span><span class="kw">t_s</span>(<span class="dv">7</span>, t) 
       <span class="cf">if</span>(n1 <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {
         t1 &lt;-<span class="st"> </span>t <span class="op">+</span><span class="st"> </span><span class="kw">expo</span>(<span class="dv">1</span>)
@@ -144,14 +145,16 @@ t_s &lt;-<span class="st"> </span><span class="cf">function</span>(lambda,s){
       n1 &lt;-<span class="st"> </span>n1 <span class="op">-</span><span class="st"> </span><span class="dv">1</span> ; n2 &lt;-<span class="st"> </span>n2 <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
       <span class="cf">if</span>(n1 <span class="op">==</span><span class="st"> </span><span class="dv">0</span>){
         t1 &lt;-<span class="st"> </span><span class="ot">Inf</span>
-      } <span class="cf">else</span> {
+      } 
+      <span class="cf">else</span> {
         t1 &lt;-<span class="st"> </span>t <span class="op">+</span><span class="st"> </span><span class="kw">expo</span>(<span class="dv">1</span>)
       }
       <span class="cf">if</span>(n2 <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {
         t2 &lt;-<span class="st"> </span>t <span class="op">+</span><span class="st"> </span><span class="kw">expo</span>(<span class="dv">3</span>)
-      }
+        }
       A2[Na <span class="op">-</span><span class="st"> </span>n1] &lt;-<span class="st"> </span>t
     }
+    <span class="co">#CASO3</span>
     <span class="cf">if</span>(t2 <span class="op">&lt;</span><span class="st"> </span>ta <span class="op">&amp;</span><span class="st"> </span>t2 <span class="op">&lt;</span><span class="st"> </span>t1){
       t &lt;-<span class="st"> </span>t2
       Nd &lt;-<span class="st"> </span>Nd <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
@@ -165,35 +168,55 @@ t_s &lt;-<span class="st"> </span><span class="cf">function</span>(lambda,s){
       D[Nd] &lt;-<span class="st"> </span>t
     }
   }
-  <span class="cf">while</span>(Nd<span class="op">!=</span>Na){
-    Nd &lt;-<span class="st"> </span>Nd<span class="op">+</span><span class="dv">1</span>
-    D[Nd] &lt;-<span class="st"> </span>t<span class="op">+</span><span class="kw">expo</span>(<span class="dv">3</span>)
+  <span class="co">#Depois que fecha estou tirando as pessas da fila</span>
+  <span class="cf">while</span> (n1<span class="op">!=</span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>n2<span class="op">!=</span><span class="dv">0</span>){
+    <span class="cf">if</span> (t1 <span class="op">&lt;=</span><span class="st"> </span>t2){
+      t &lt;-<span class="st">  </span>t1
+      n1 &lt;-<span class="st"> </span>n1 <span class="op">-</span><span class="st"> </span><span class="dv">1</span> ; n2 &lt;-<span class="st"> </span>n2 <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+      <span class="cf">if</span>(n1 <span class="op">==</span><span class="st"> </span><span class="dv">0</span>){
+        t1 &lt;-<span class="st"> </span><span class="ot">Inf</span>
+      } 
+      <span class="cf">else</span> {
+        t1 &lt;-<span class="st"> </span>t <span class="op">+</span><span class="st"> </span><span class="kw">expo</span>(<span class="dv">1</span>)
+      }
+      <span class="cf">if</span>(n2 <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {
+        t2 &lt;-<span class="st"> </span>t <span class="op">+</span><span class="st"> </span><span class="kw">expo</span>(<span class="dv">3</span>)
+      }
+      A2[Na <span class="op">-</span><span class="st"> </span>n1] &lt;-<span class="st"> </span>t
+    }
+    <span class="cf">else</span>{
+      t &lt;-<span class="st"> </span>t2
+      Nd &lt;-<span class="st"> </span>Nd <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+      n2 &lt;-<span class="st"> </span>n2 <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
+      <span class="cf">if</span>(n2 <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {
+        t2 &lt;-<span class="st"> </span><span class="ot">Inf</span>
+      }
+      <span class="cf">if</span>(n2 <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) {
+        t2 &lt;-<span class="st"> </span>t <span class="op">+</span><span class="st"> </span><span class="kw">expo</span>(<span class="dv">3</span>)
+      }
+      D[Nd] &lt;-<span class="st"> </span>t
+    }
   }
-  A1 &lt;-<span class="st"> </span>A1[<span class="op">-</span>Na] ; D &lt;-<span class="st"> </span>D[<span class="op">-</span>Nd]
-  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">Chegada =</span> A1, <span class="st">`</span><span class="dt">Saída</span><span class="st">`</span> =<span class="st"> </span>D, <span class="dt">mean.perm =</span> <span class="kw">mean</span>(D <span class="op">-</span><span class="st"> </span>A1)))
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">perm =</span> <span class="kw">mean</span>(D <span class="op">-</span><span class="st"> </span>A1)))
+  }
+<span class="kw">series_queue</span>(<span class="dv">100</span>)</code></pre></div>
+<pre><code>## $perm
+## [1] 105.9367</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>){
+  e[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">series_queue</span>(<span class="dv">100</span>)<span class="op">$</span>perm)
 }
-
-tm &lt;-<span class="st"> </span><span class="dv">0</span>
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>){
-  tm[i] &lt;-<span class="st"> </span><span class="kw">series_queue</span>(<span class="dv">100</span>)<span class="op">$</span>mean.perm
-}
-<span class="kw">mean</span>(tm)</code></pre></div>
-<pre><code>## [1] 36.8174</code></pre>
+<span class="kw">mean</span>(e)</code></pre></div>
+<pre><code>## [1] 112.3432</code></pre>
 </div>
 <div id="modelo-de-risco-de-seguro" class="section level1">
 <h1>Modelo de risco de seguro</h1>
 <p>Definindo as variaveis do problema:</p>
 <p><span class="math inline">\(T\)</span>=“Tempo de analise”<span class="math inline">\(=365\)</span> dias<br />
 <span class="math inline">\(a_0\)</span>=“capital inicial”<span class="math inline">\(=25000\)</span><br />
-<span class="math inline">\(t_e\)</span>=“Tempo do proximo evento”<br />
-<span class="math inline">\(n_0\)</span>=“Número inicial de clientes”=???????<br />
 <span class="math inline">\(J = \left\{ \begin{array}{lll} \ 1 &amp; \hbox{, se chega um novo segurando}\\ \ 2 &amp; \hbox{, se perde um segurado}\\ \ 3 &amp; \hbox{, se requere o seguro} \end{array} \right.\)</span><br />
-Chegada de novos segurados<span class="math inline">\(\sim\)</span>Pois(???????)<br />
 Chegada de reivindicações<span class="math inline">\(\sim\)</span>Pois(10)<br />
-Valor reivindicado<span class="math inline">\(\sim\)</span> Exp(<span class="math inline">\(\frac{1}{1000}\)</span>)<br />
-Saida segurados<span class="math inline">\(\sim\)</span>Pois(???????)<br />
-<span class="math inline">\(\mathbb{P}(J=1)=\)</span> e <span class="math inline">\(\mathbb{P}(J=2)=\)</span> e <span class="math inline">\(\mathbb{P}(J=3)=\)</span><br />
-<span class="math inline">\(I = \left\{ \begin{array}{ll} \ 1 &amp; \hbox{, se o capital for não-negativo}\\ \ 0 &amp; \hbox{, caso contrario} \end{array} \right.\)</span></p>
+Valor reivindicado<span class="math inline">\(\sim\)</span> Exp(<span class="math inline">\(\frac{1}{1000}\)</span>)</p>
 <p>Definidas as variavies vamos implementar o algoritmo</p>
 <p>Simulando a quantidade de reivindicações dos segurados</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pois &lt;-<span class="st"> </span><span class="cf">function</span>(lambda){
@@ -205,33 +228,35 @@ Saida segurados<span class="math inline">\(\sim\)</span>Pois(???????)<br />
   }
   <span class="kw">return</span>(N)
 }</code></pre></div>
-<p>Vendo o lucro de um dia de operação</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lucro &lt;-<span class="st"> </span><span class="cf">function</span>(lambda1,lambda2){
+<p>Vendo o ganho de um dia de operação</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ganho &lt;-<span class="st"> </span><span class="cf">function</span>(lambda1,lambda2){
+  d &lt;-<span class="st"> </span><span class="ot">NULL</span>; I &lt;-<span class="st"> </span><span class="dv">0</span>
   r &lt;-<span class="st"> </span><span class="kw">pois</span>(lambda1)
   vr &lt;-<span class="st"> </span><span class="kw">expo2</span>(lambda2,r)
-  L &lt;-<span class="st"> </span><span class="dv">11000</span><span class="op">-</span><span class="kw">sum</span>(vr)
-  <span class="kw">return</span>(L)
-}</code></pre></div>
-<p>Vendo o lucro anual</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anual &lt;-<span class="st"> </span><span class="cf">function</span>(lambda1,lambda2){
-  d &lt;-<span class="st"> </span><span class="dv">0</span>
-  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">365</span>){
-    d[i] &lt;-<span class="st"> </span><span class="kw">lucro</span>(lambda1,lambda2)
+  d[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">25000</span><span class="op">+</span><span class="dv">11000</span><span class="op">-</span><span class="kw">sum</span>(vr)
+  
+  <span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">365</span>){
+    r &lt;-<span class="st"> </span><span class="kw">pois</span>(lambda1)
+    vr &lt;-<span class="st"> </span><span class="kw">expo2</span>(lambda2,r)
+    d[i] &lt;-<span class="st"> </span>d[i<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span><span class="dv">11000</span><span class="op">-</span><span class="kw">sum</span>(vr)
   }
-  anual &lt;-<span class="st"> </span>d<span class="op">+</span><span class="dv">25000</span>
-  anual[anual<span class="op">&gt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
-  anual[anual<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">0</span>
-  <span class="kw">return</span>(<span class="kw">mean</span>(anual))
-}
-<span class="kw">anual</span>(<span class="dv">10</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">1000</span>)</code></pre></div>
-<pre><code>## [1] 1</code></pre>
-<p>Estimando a probabilidade de ter lucro num ano</p>
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">365</span>){
+    <span class="cf">if</span> (d[i]<span class="op">&gt;</span><span class="dv">0</span>){
+      I[i] &lt;-<span class="st"> </span><span class="dv">1</span>
+    }
+    <span class="cf">else</span> {
+      I[i] &lt;-<span class="st"> </span><span class="dv">0</span>
+    }
+  }
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">Indicadora=</span><span class="kw">mean</span>(I),<span class="dt">Lucro=</span><span class="kw">sum</span>(d)))
+}</code></pre></div>
+<p>Estimando a media do ganho anual</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e &lt;-<span class="st"> </span><span class="dv">0</span>
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>){
-  e[i] &lt;-<span class="st"> </span><span class="kw">anual</span>(<span class="dv">10</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">1000</span>)
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>){
+  e[i] &lt;-<span class="st"> </span><span class="kw">ganho</span>(<span class="dv">10</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">1000</span>)<span class="op">$</span>Indicadora
 }
 <span class="kw">mean</span>(e)</code></pre></div>
-<pre><code>## [1] 0.9999753</code></pre>
+<pre><code>## [1] 0.9943836</code></pre>
 </div>
 <div id="modelo-de-reparo" class="section level1">
 <h1>Modelo de Reparo</h1>
@@ -243,39 +268,41 @@ Saida segurados<span class="math inline">\(\sim\)</span>Pois(???????)<br />
 <span class="math inline">\(s\)</span>=total de maquina na reserva=3<br />
 <span class="math inline">\(r\)</span>=número de maquinas quebradas<br />
 <span class="math inline">\(F\sim\)</span>Exp(1), <span class="math inline">\(G\sim\)</span>Exp(2)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span><span class="cf">function</span>( ){
-  <span class="co">#Iniciando</span>
-  n &lt;-<span class="st"> </span><span class="dv">4</span>; s &lt;-<span class="st"> </span><span class="dv">3</span>; X &lt;-<span class="st"> </span><span class="kw">expo2</span>(<span class="dv">1</span>,n)
-  t &lt;-<span class="st"> </span><span class="kw">sort</span>(X); tr &lt;-<span class="st"> </span><span class="ot">Inf</span>; r &lt;-<span class="st"> </span><span class="dv">0</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Iniciando</span>
+n &lt;-<span class="st"> </span><span class="dv">4</span>; s &lt;-<span class="st"> </span><span class="dv">3</span>; 
+reparo &lt;-<span class="st"> </span><span class="cf">function</span>(n,s){
+  X &lt;-<span class="st"> </span><span class="kw">expo2</span>(<span class="dv">1</span>,n)
+  X &lt;-<span class="st"> </span><span class="kw">sort</span>(X); tr &lt;-<span class="st"> </span><span class="ot">Inf</span>; r &lt;-<span class="st"> </span><span class="dv">0</span>
+  
+  <span class="co">#Començando</span>
   <span class="cf">while</span>(r<span class="op">&lt;</span>s<span class="op">+</span><span class="dv">1</span>){
-  <span class="cf">if</span> (t[<span class="dv">1</span>]<span class="op">&lt;</span>tr){
-    t &lt;-<span class="st"> </span>t[<span class="dv">1</span>]; r &lt;-<span class="st"> </span>r<span class="op">+</span><span class="dv">1</span>
-    <span class="cf">if</span> (r<span class="op">&lt;</span>s<span class="op">+</span><span class="dv">1</span>){
-      x &lt;-<span class="st"> </span><span class="kw">expo</span>(<span class="dv">1</span>); t &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">c</span>(t[<span class="dv">2</span><span class="op">:</span>n],x))
+    <span class="cf">if</span> (X[<span class="dv">1</span>]<span class="op">&lt;</span>tr){
+      t &lt;-<span class="st"> </span>X[<span class="dv">1</span>]; r &lt;-<span class="st"> </span>r<span class="op">+</span><span class="dv">1</span>
+      <span class="cf">if</span> (r<span class="op">&lt;</span>s<span class="op">+</span><span class="dv">1</span>){
+        x &lt;-<span class="st"> </span><span class="kw">expo</span>(<span class="dv">1</span>); X &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">c</span>(X[<span class="dv">2</span><span class="op">:</span>n],t<span class="op">+</span>x))
+      }
+      <span class="cf">if</span> (r<span class="op">==</span><span class="dv">1</span>){
+        tr &lt;-<span class="st"> </span>t<span class="op">+</span><span class="kw">expo</span>(<span class="dv">2</span>)
+      }
     }
-    <span class="cf">if</span> (r<span class="op">==</span><span class="dv">1</span>){
-      tr &lt;-<span class="st"> </span>t<span class="op">+</span><span class="kw">expo</span>(<span class="dv">2</span>)
+    <span class="cf">else</span>{
+      t &lt;-<span class="st"> </span>tr; r &lt;-<span class="st"> </span>r<span class="op">-</span><span class="dv">1</span>
+      <span class="cf">if</span>(r<span class="op">&gt;</span><span class="dv">0</span>){
+        tr &lt;-<span class="st"> </span>t<span class="op">+</span><span class="kw">expo</span>(<span class="dv">2</span>)
+      }
+      <span class="cf">else</span> {tr &lt;-<span class="st"> </span><span class="ot">Inf</span>}
     }
   }
-  <span class="cf">else</span>{
-    t &lt;-<span class="st"> </span>tr; r &lt;-<span class="st"> </span>r<span class="op">-</span><span class="dv">1</span>
-    <span class="cf">if</span>(r<span class="op">&gt;</span><span class="dv">0</span>){
-      tr &lt;-<span class="st"> </span>t<span class="op">+</span><span class="kw">expo</span>(<span class="dv">2</span>)
-    }
-    <span class="cf">else</span> {tr &lt;-<span class="st"> </span><span class="ot">Inf</span>}
-  }
-}
-
-tc &lt;-<span class="st"> </span>t
-<span class="kw">return</span>(t)
-}
-
-e &lt;-<span class="st"> </span><span class="dv">0</span>
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>){
-  e[i] &lt;-<span class="st"> </span><span class="kw">f</span>( )
+  tc &lt;-<span class="st"> </span>t
+  <span class="kw">return</span>(tc)
+}</code></pre></div>
+<p>Achando o tempo medio</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>){
+  e[i] &lt;-<span class="st"> </span><span class="kw">reparo</span>(n,s)
 }
 <span class="kw">mean</span>(e)</code></pre></div>
-<pre><code>## [1] 0.6331491</code></pre>
+<pre><code>## [1] 1.5905</code></pre>
 </div>
 </section>
 

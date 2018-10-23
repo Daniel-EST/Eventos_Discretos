@@ -2,10 +2,10 @@
 
 #Definindo algumas variveis;
 
-#t = tempo; Nc = Número de chegadas ate o tempo t; Ns = Número de saidas ate o tempo t
-#n = Número de clinetes no sistema no tempo t (SS)
+#t = tempo; Nc = NÃºmero de chegadas ate o tempo t; Ns = NÃºmero de saidas ate o tempo t
+#n = NÃºmero de clinetes no sistema no tempo t (SS)
 #tc = tempo da chegada do proximo cliente apos t
-#ts = tempo de termino do serviço do cliente sendo atendido no tempo t
+#ts = tempo de termino do servi?o do cliente sendo atendido no tempo t
 
 lambda2 <- 1; lambda <- 2; Tempo <- 10
 
@@ -47,3 +47,21 @@ fila2 <- function(Tempo,lambda,lambda2){
 
 fila2(Tempo,lambda,lambda2)
 
+
+# Fazendo grafico ---------------------------------------------------------
+
+dados <- fila2(Tempo,lambda,lambda2)
+dados
+library(plotly)
+y1 <- dados$Chegada; x <- 1:length(dados$Chegada); y2 <- dados$Saida
+eixo_x <- list(
+  title = "i-esimo cliente",
+  titlefont = t
+)
+eixo_y <- list(
+  title = "Tempo",
+  titlefont = t)
+
+p1 <- plot_ly(y=y1, x=x , type="scatter", mode="makers+lines",name="Tempo Chegada",line = list(color = 'rgb(255, 0, 0)', width = 3)) %>% 
+  layout(xaxis = eixo_x, yaxis = eixo_y); p1
+p1 <- add_trace(p1, y=~y2, x=~x , type="scatter", mode="makers+lines",name="Tempo Saida",line = list(color = 'rgb(0, 255, 0)', width = 3)); p1
