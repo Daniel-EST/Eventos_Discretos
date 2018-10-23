@@ -94,20 +94,38 @@ lucro_dia <- function(lambda){
   return(11000 - sum(custo_dia))
 }
 
-lucro_ano <- function(lambda){
-  custo_ano <- NULL
-  for(i in 1:365){
-    custo_ano[i] <- lucro_dia(lambda)
+Q2 <- function(lambda){
+  d <- NULL ; prob <- NULL
+  d[1] <- 25000 + lucro_dia(lambda)
+  prob[1] <- ifelse(d[1] >= 0, 1 ,0)
+  for(i in 2:365){
+    d[i] <- d[i-1] + lucro_dia(lambda)
+    prob[i] <- ifelse(d[i] >= 0, 1, 0)
   }
-  lucro_ano <- 25000 + sum(custo_ano)
-  return(lucro_ano)
+  return(mean(prob))
 }
 
-l_m <- 0
+# Média da probabilidade
+a <- 0
 for(i in 1:100){
-  l_m[i] <- lucro_ano(10)
+  a[i] <- Q2(10)
 }
-mean(l_m)
+mean(a)
+
+# lucro_ano <- function(lambda){
+#  custo_ano <- NULL
+#  for(i in 1:365){
+#    custo_ano[i] <- lucro_dia(lambda)
+#   }
+#   lucro_ano <- 25000 + sum(custo_ano)
+#   return(lucro_ano)
+# }
+
+# l_m <- 0
+# for(i in 1:100){
+#  l_m[i] <- lucro_ano(10)
+# }
+# mean(l_m)
 
 # Questão 3 ####
 repair_model <- function(n, s, lambda_1, lambda_2){
