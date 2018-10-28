@@ -24,7 +24,7 @@ poisson <- function(lambda){
   return(i)
 }
 
-# Questão I #### 
+# Questão 1#### 
 
 # Simulando processo de poisson não homogêneo. 
 poisproc <- function(lambda, s){
@@ -41,8 +41,7 @@ poisproc <- function(lambda, s){
 series_queue <- function(lambda, lambda_1, lambda_2, Time){
   t <- 0; Na <- 0; Nd <- 0; n1 <- 0; n2 <- 0; A1 <- 0; A2 <- 0; D <- 0
   ta <- poisproc(lambda, 0) ; t1 <- Inf ; t2 <- Inf
-  while(t <= Time){
-    # CASO 1
+  while(ta <= Time){
     if(ta == min(ta, t1, t2)){
       t <- ta
       Na <- Na + 1
@@ -51,7 +50,6 @@ series_queue <- function(lambda, lambda_1, lambda_2, Time){
       if(n1 == 1) t1 <- t + expr(lambda_1)
       A1[Na] <- t
     }
-    # CASO 2
     if(t1 < ta & t1 <= t2){
       t <-  t1
       n1 <- n1 - 1 ; n2 <- n2 + 1
@@ -72,11 +70,28 @@ series_queue <- function(lambda, lambda_1, lambda_2, Time){
       D[Nd] <- t
     }
   }
-  while(Nd!=Na){
-    Nd <- Nd + 1
-    D[Nd] <- t + expr(lambda_2)
+  while (n1!=0 || n2!=0){
+    if (t1 <= t2){
+      t <-  t1
+      n1 <- n1 - 1
+      n2 <- n2 + 1
+      if(n1 == 0){
+        t1 <- Inf
+      } 
+      else {
+        t1 <- t + expr(lambda_1)
+      }
+      if(n2 == 1) t2 <- t + expr(lambda_2)
+      A2[Na - n1] <- t
+    } else {
+      t <- t2
+      Nd <- Nd + 1
+      n2 <- n2 - 1
+      if(n2 == 0) t2 <- Inf
+      if(n2 > 0) t2 <- t + expr(lambda_2)
+      D[Nd] <- t
+    }
   }
-  A1 <- A1[-Na] ; D <- D[-Nd]
   return(list(Chegada = A1, `Saída` = D, mean.perm = mean(D - A1)))
 }
 
@@ -94,7 +109,7 @@ lucro_dia <- function(lambda){
   return(11000 - sum(custo_dia))
 }
 
-Q2 <- function(lambda){
+lucro_medio <- function(lambda){
   d <- NULL ; prob <- NULL
   d[1] <- 25000 + lucro_dia(lambda)
   prob[1] <- ifelse(d[1] >= 0, 1 ,0)
@@ -106,26 +121,11 @@ Q2 <- function(lambda){
 }
 
 # Média da probabilidade
-a <- 0
+lm <- 0
 for(i in 1:100){
-  a[i] <- Q2(10)
+  lm[i] <- lucro_medio(10)
 }
-mean(a)
-
-# lucro_ano <- function(lambda){
-#  custo_ano <- NULL
-#  for(i in 1:365){
-#    custo_ano[i] <- lucro_dia(lambda)
-#   }
-#   lucro_ano <- 25000 + sum(custo_ano)
-#   return(lucro_ano)
-# }
-
-# l_m <- 0
-# for(i in 1:100){
-#  l_m[i] <- lucro_ano(10)
-# }
-# mean(l_m)
+mean(lm)
 
 # Questão 3 ####
 repair_model <- function(n, s, lambda_1, lambda_2){
@@ -155,6 +155,7 @@ repair_model <- function(n, s, lambda_1, lambda_2){
   }
   return(t)
 }
+
 repair_model(4, 3, 1 ,2)
 
 rm_m <- NULL

@@ -314,7 +314,7 @@ reparo <- function(n,s){
 }
 ```
 
-Achando o tempo médio
+Achando o tempo médio:
 
 ```{r}
 e <- 0
