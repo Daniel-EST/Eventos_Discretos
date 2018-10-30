@@ -75,7 +75,7 @@ t_s <- function(lambda,s){
 ```
 
 ```{r}
-series_queue <- function(Time){
+serie <- function(Time){
   t <- 0; Na <- 0; Nd <- 0; n1 <- 0; n2 <- 0; A1 <- 0; A2 <- 0; D <- 0
   ta <- t_s(7, 0) ; t1 <- Inf ; t2 <- Inf
   #browser()
@@ -156,7 +156,7 @@ series_queue <- function(Time){
 
 e <- 0
 for(i in 1:100){
-  e[i] <- mean(series_queue(100)$perm)
+  e[i] <- mean(serie(100)$perm)
 }
 mean(e)
 ```
@@ -164,7 +164,7 @@ mean(e)
 Gráfico com o tempo de chegada e saída para uma observação
 
 ```{r}
-dados <- series_queue(100)
+dados <- serie(100)
 y1 <- dados$Chegada; y2 <- dados$Saida; x <- 1:length(dados$Chegada)
 eixo_x <- list(
   title = "i-esimo cliente",
@@ -281,7 +281,15 @@ $tr$ tempo que a máquina termina o reparo
 $n$=total de máquinas em uso=4  
 $s$=total de máquina na reserva=3    
 $r$=número de máquinas quebradas  
-$F\sim$Exp(1), $G\sim$Exp(2)   
+$X$=Vetor do tempos ordenados
+$F\sim$ X_{2}, $G\sim$ X_{1}   
+
+##Implementando o algoritmo
+
+1-Enquanto r<s+1  
+1.1- se X[1] < tr    
+t = X[1] e r = r + 1  
+
 
 ```{r}
 #Iniciando
