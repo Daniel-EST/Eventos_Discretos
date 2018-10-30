@@ -13,11 +13,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<style>
-p    {text-align: justify;
-      text-justify: inter-word;}
-</style>
-
 # Funções Auxiliares
 
 Gera uma v.a. $X \sim Exp(\lambda)$:
@@ -80,7 +75,7 @@ $D(n)$ = Tempo de saída do $n$-ésimo cliente do sistema. No código: `D`;
 $t_a$ = Tempo da próxima chegada. No código: `ta`;  
 $t_1$ = Tempo gasto do cliente atualmente no servidor 1, $t_1 \sim Exp(\lambda_1)$ No código: `t1`;  
 $t_2$=Tempo gasto do cliente atualmente no servidor 2, $t_2 \sim Exp(\lambda_2)$. No código: `t2`;  
-$T$ = Tempo de analise. No código: `Time`;  
+$T$ = Tempo de análise. No código: `Time`;  
 $\lambda(t) = 3 + \frac{4}{t+1}$, se $t \geq 0$;  
   
 Código que simula a fila com dois servidores em série:
@@ -194,30 +189,30 @@ Algorítimo que utilizamos:
     1. Sistema precisa de n máquinas funcionando;
     2. Máquina falha independente depois de um tempo $X \sim F$, para algum $F$;
     3. Máquinas quebradas são imediatamente substituídas e mandadas para reparo;
-    4. As máquinas são reparadas em sequência;
+    4. As máquinas são reparadas na ordem em que foram quebradas;
     5. Máquinas consertadas ficam como reservas;
     6. Um reparado dura um tempo $R \sim G$, para algum $G$;
     7. O sistema para se alguma máquina falha sem que haja outras máquinas na reserva;
     8. Assuma inicialmente $n+s$ o total de máquinas;
-    9. O objetvio da simulação é determinar o valor esperado do tempo, $E[T]$;
+    9. O objetivo da simulação é determinar o valor esperado do tempo, $E[T]$;
 
 * Variáveis: 
     1. **Tempo** $t$;
-    2. **Estado** do Sistema $r$, númeor de maquinas no reparo
-    3. **Eventos** $t_1 \le t_2 \le \dots \le t_n$ tempos em que houveram falhas e $t^*$ tempo para o termino do próximo reparo;
+    2. **Estado** do Sistema $r$, número de máquinas no reparo
+    3. **Eventos** $t_1 \le t_2 \le \dots \le t_n$ tempos em que houveram falhas e $t^*$ tempo para o término do próximo reparo;
 
 * Algorítimo: dadas as constantes $n$, $s$, e $F(x)$, $G(x)$;  
 **Inicialize** $t = r = 0, t^* = \infty$, gere $X_i \sim F, i = 1,2, \dots , n$ e ordene para conseguir os $ti$'s;  
-**Enquanto** $r < s + 1$, atualize o estado do sistema usando dois casos:  
-- **Se** $t_1 < t^*$ (uma nova falha)    
+**Enquanto** $r \textless s + 1$, atualize o estado do sistema usando dois casos:  
+- **Se** $t_1 \textless t^*$ (uma nova falha)    
   reinicie $t = t_1$, $r = r+1$  
-  se $r < s + 1$ gere $X \sim F$,  
-  \vspace{12mm} e ordene $t_2, t_3, \dots, t_n, t + X$;  
-  se $r = 1$, gere $R \sim G$, e reinicie $t^* = t + R$;  
+  se $r \textless s + 1$ gere $X \sim F$,  
+  \vspace{15mm} e ordene $t_2, t_3, \dots, t_n, t + X$;  
+  se $r = 1$, gere $R \sim G$, e reinicie $t^* = t + R$;
 - **Senão** (um reparo terminado)  
   reinicie $t = t^*$, $r = r - 1$;  
-  \vspace{12mm} caso contrário, $t^* = \infty$.  
-**Saída** tempo de quebra $T = t$
+  \vspace{15mm} caso contrário, $t^* = \infty$.
+- **Saída** tempo de quebra $T = t$
 
 
 Código que simula um modelo de reparos: Para $n = 4$, $s = 3$, $\lambda_1 = 1$ e $\lambda_2 = 2$.
