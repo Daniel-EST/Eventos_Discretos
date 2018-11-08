@@ -1,0 +1,99 @@
+---
+title: "Atividade 4"
+author: "Gabriel Mizuno"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+require(plotly); require(dplyr)
+```
+
+### Fun??es Auxiliares
+
+```{r}
+expo <- function(lambda){
+  u <- runif(1)
+  y <- -log(1-u)/lambda
+  return(y)
+}
+
+expo_n <- function(n,lambda){
+  x <- NULL
+  for (i in 1:n){
+    x[i] <- expo(lambda)
+  }
+  return(x)
+}
+
+```
+
+# Item a
+
+Vamos definir a seguinte v.a indicadora;$$I=\begin{cases} 1, & \mbox{se } \displaystyle\sum_{i=1}^5 iX_{i}\geqslant21.6\\ 0, & \mbox{caso contrario}\end{cases}$$  
+Definindo $I$ dessa forma temos que:
+$$\theta=\mathbb{E}[I]=\mathbb{P}\left( \displaystyle\sum_{i=1}^5 iX_{i}\geqslant21.6\right) $$
+
+```{r}
+I <- function(n,lambda){
+  s <- sum(1:n*expo_n(n,1))
+  if (s>=21.6){
+    return(1)
+  }
+  else{
+    return(0)
+  }
+}
+```
+
+Vamos achar $\mathbb{E}[I]$ e assim estimar a probabilidade pedida
+
+```{r}
+e <- 0
+for (i in 1:10000){
+  e[i] <- I(5,1)
+}
+mean(e)
+```
+
+# Item b
+
+# Item c
+
+Definindo a vari?vel controle $Z=\displaystyle\sum_{i=1}^5 iX_{i}$ ==> $\mathbb{E}[Z]=15$ e $Var[Z]=55$
+Simulando $Cov(Y,Z)$, onde $Y=I$
+
+```{r}
+f <- function(n){
+  prob <- NULL
+  for (i in 1:n){
+    Y <- 0; Z <- 0
+    for (i in 1:1000){
+      Y[i] <- I(5,1)
+      Z[i] <- sum(1:5*expo_n(5,1))
+    }
+    cov <- cov(Y,Z)
+    prob <- c(prob,mean(Y)-(cov/55)*(mean(Z)-15))
+  }
+  var(prob)
+}
+```
+
+Achando uma estimativa para a probabilidade pedida
+
+```{r}
+e <- 0
+for (i in 1:1000){
+  e[i] <- f(100)
+}
+mean(e)
+```
+
+
+
