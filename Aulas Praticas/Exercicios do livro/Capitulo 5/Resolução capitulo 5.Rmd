@@ -374,7 +374,7 @@ uniforme <- function(a,b){
 
 Usando o metodo da rejeição temos que o ponto q maximiza $f(x)/g(x)$ onde $g(x)=\lambda e^{-\lambda x}$
 $x=\lambda$. Pela teoria sabemos que $\mathbb{E}[X]=c$, queremos minimizar $\mathbb{E}[X]$, ou seja queremos achar 
-valor de $c(\lambda)=\frac{e^{\frac{\lambda^2}{2}}}{{\sqrt{2\pi} \lambda}}$  ==> $\lambda = +-1$, como $\lambda>0$ temos que $\lambda=1$
+valor de $c(\lambda)=\frac{e^{\frac{\lambda^2}{2}}}{\sqrt{2\pi} \lambda}$  ==> $\lambda = +-1$, como $\lambda>0$ temos que $\lambda=1$
 
 ##Exercicio 22
 
