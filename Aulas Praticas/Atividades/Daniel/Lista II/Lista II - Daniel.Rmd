@@ -203,15 +203,15 @@ Algorítimo que utilizamos:
 
 * Algorítimo: dadas as constantes $n$, $s$, e $F(x)$, $G(x)$;  
 **Inicialize** $t = r = 0, t^* = \infty$, gere $X_i \sim F, i = 1,2, \dots , n$ e ordene para conseguir os $ti$'s;  
-**Enquanto** $r \textless s + 1$, atualize o estado do sistema usando dois casos:  
-- **Se** $t_1 \textless t^*$ (uma nova falha)    
+**Enquanto** $r < s + 1$, atualize o estado do sistema usando dois casos:  
+- **Se** $t_1 < t^*$ (uma nova falha)    
   reinicie $t = t_1$, $r = r+1$  
-  se $r \textless s + 1$ gere $X \sim F$,  
-  \vspace{15mm} e ordene $t_2, t_3, \dots, t_n, t + X$;  
+  se $r < s + 1$ gere $X \sim F$,  
+  e ordene $t_2, t_3, \dots, t_n, t + X$;  
   se $r = 1$, gere $R \sim G$, e reinicie $t^* = t + R$;
 - **Senão** (um reparo terminado)  
   reinicie $t = t^*$, $r = r - 1$;  
-  \vspace{15mm} caso contrário, $t^* = \infty$.
+  caso contrário, $t^* = \infty$.
 - **Saída** tempo de quebra $T = t$
 
 
