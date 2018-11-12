@@ -30,16 +30,20 @@ I <- function(n,lambda){
 
 #Vamos achar E[I] e assim estimar a probabilidade pedida
 
-e <- 0
+e2 <- NULL; t <- NULL
 for (i in 1:1000){
-  e[i] <- I(5,1)
+  for (j in 1:100){
+    t[j] <- I(5,1)
+  }
+  e2[i] <- mean(t)
 }
+mean(e2)
 
 # Item b ------------------------------------------------------------------
 ant <- function(n){
   z1 <- z2 <- m <- prob <- NULL
   for (j in 1:n){
-    for (i in 1:1000){
+    for (i in 1:100){
       u <- runif(5)
       z1[i] <- sum(1:5*(-log(u)))
       z2[i] <- sum(1:5*(-log(1-u)))
@@ -78,13 +82,15 @@ cont(100)
 
 e1 <- 0
 for (i in 1:1000){
-  e1[i] <- cont(1000)
+  e1[i] <- cont(100)
 }
 
-e <- ant(1000)
-#Controle esta de vermelho e antagocnicas esta de azul
-hist(e1, col="red", ylab=" ", 
-     xlab=expression(theta), main="Analisando a variancia dos dois metodos" )
-hist(e, col="blue", add=T)
+e <- ant(1000); var(e1); var(e); var(e2)
+
+#Controle esta de vermelho, antagocnicas esta de azul e o metodo normal esta de verde
+hist(e1, col="red",add=TRUE)
+hist(e2, col="green", ylab=" ", 
+     xlab=expression(theta), main="Analisando a variancia dos dois metodos")
+hist(e, col="blue")
 legend("topright", legend=c("Controle","Antagonicas"), col=c("red", 
-                                                      "blue"), pt.cex=2, pch=15 )
+                                                             "blue"), pt.cex=2, pch=15 )

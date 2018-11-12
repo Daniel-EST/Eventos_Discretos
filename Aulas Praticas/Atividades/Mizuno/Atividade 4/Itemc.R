@@ -1,5 +1,5 @@
 # Item c ------------------------------------------------------------------
-f <- function(n){
+cont <- function(n){
   prob <- NULL
   Y <- 0; Z <- 0
   for (i in 1:n){
@@ -10,3 +10,4 @@ f <- function(n){
   prob <- c(prob,mean(Y)-(cov/55)*(mean(Z)-15))
   return(prob)
 }
+cont(100)
