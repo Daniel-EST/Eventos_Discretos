@@ -1,0 +1,104 @@
+---
+title: "Simulação de Eventos Discretos \nAtividade III"
+author: "Daniel dos Santos"
+date: "`r format(Sys.Date(), '%d de %B de %y.')`"
+output: pdf_document
+
+---
+
+```{r include=FALSE}
+library(ggplot2)
+```
+
+# Funções auxiliares
+
+```{r}
+expr <- function(lambda){
+  u <- runif(1)
+  return(-1*log(u)/lambda)
+}
+```
+
+```{r}
+exprn <- function(n,lambda){
+  exp <- NULL
+  for(i in 1:n){
+    exp[i] <- expr(lambda)
+  }
+  return(exp)
+}
+```
+
+# Questão 1
+
+## a) Não usaremos nenhum método de  redução de variância.
+
+```{r}
+q1_a <- function(n){
+  prob <- NULL
+  for(i in 1:n) prob[i] <- ifelse(sum(1:5*exprn(5, 1)) >= 21.6, 1, 0)
+  return(mean(prob))
+}
+q1_a(100)
+```
+
+## b) Usaremos agora o método das variáveis antagônicas.
+
+```{r}
+q1_b <- function(n){
+  media <- NULL ; prob <- NULL
+  for(j in 1:n){
+    for(i in 1:n){
+      u <- runif(5)
+      r1 <- ifelse(sum(1:5*(-log(u))) >= 21.6 , 1, 0)
+      r2 <- ifelse(sum(1:5*(-log(1-u))) >= 21.6, 1, 0)
+      media[i] <- mean(c(r1, r2))
+   }
+   prob[j] <- mean(media) 
+  }
+  return(mean(prob))
+}
+q1_b(100)
+```
+
+## c) Usaremos agora o método da variável controle.
+
+```{r}
+q1_c <- function(n){
+  prob <- NULL ; y <- NULL ; z <- NULL
+  for(j in 1:n){
+    for(i in 1:n){
+      y[i] <- ifelse(sum(1:5*(-log(runif(5)))) >= 21.6 , 1, 0)
+      z[i] <- sum(1:5*(-log(runif(5))))
+    }
+    covariance <- cov(y, z)
+    prob[j] <- mean(y)-(covariance/55)*(mean(z)-15)
+  }
+  return(mean(prob))
+}
+q1_c(100)
+```
+
+## d) Qual método reduziu mais a variância?
+Foi o usado o pacote `ggplot2` para gerar esses gráficos.
+
+```{r echo=FALSE}
+# Ggplot2 library
+antagonica <- NULL
+for(i in 1:100){
+  antagonica[i] <- q1_b(100)
+}
+
+controle <- NULL
+for(i in 1:100){
+  controle[i] <- q1_c(100)
+}
+ 
+# Data 
+names=c(rep("Antagônica", 100) , rep("Controle", 100))
+value=c(antagonica,controle)
+data=data.frame(names,value)
+ 
+#Graph
+qplot(x=names , y=value , data=data , geom=c("boxplot","jitter") , fill=names, xlab = 'Método', ylab = 'Estimação')
+```
