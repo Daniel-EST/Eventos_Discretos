@@ -12,7 +12,7 @@ expo_n <- function(n,lambda){
   }
   return(x)
 }
-
+require(plotly); require(dplyr)
 
 # Item a ------------------------------------------------------------------
 
@@ -34,17 +34,12 @@ e <- 0
 for (i in 1:1000){
   e[i] <- I(5,1)
 }
-mean(e)
-p <- plot_ly(x = e,
-             type = "histogram",
-             histnorm = "probability")
-p
 
 # Item b ------------------------------------------------------------------
 ant <- function(n){
   z1 <- z2 <- m <- prob <- NULL
   for (j in 1:n){
-    for (i in 1:100){
+    for (i in 1:1000){
       u <- runif(5)
       z1[i] <- sum(1:5*(-log(u)))
       z2[i] <- sum(1:5*(-log(1-u)))
@@ -60,13 +55,13 @@ ant <- function(n){
   return(prob)
 }
 
-mean(ant(100))
+mean(ant(1000))
 # Item c ------------------------------------------------------------------
 
 #Definindo a variavel controle Z=soma(iXi) ==> E[Z]=15 e Var[Z]=55
 #Simulando cov(Y,Z), onde Y=I
 
-f <- function(n){
+cont <- function(n){
   prob <- NULL
   Y <- 0; Z <- 0
   for (i in 1:n){
@@ -77,17 +72,17 @@ f <- function(n){
   prob <- c(prob,mean(Y)-(cov/55)*(mean(Z)-15))
   return(prob)
 }
-f(100)
+cont(100)
 
 # Item d ------------------------------------------------------------------
 
 e1 <- 0
 for (i in 1:1000){
-  e1[i] <- f(100)
+  e1[i] <- cont(1000)
 }
 
 e <- ant(1000)
-
+#Controle esta de vermelho e antagocnicas esta de azul
 hist(e1, col="red", ylab=" ", 
      xlab=expression(theta), main="Analisando a variancia dos dois metodos" )
 hist(e, col="blue", add=T)

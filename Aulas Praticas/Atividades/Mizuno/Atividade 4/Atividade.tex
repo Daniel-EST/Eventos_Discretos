@@ -88,7 +88,7 @@ E assim vamos achar $$\theta=0.175 $$
 \lstinputlisting[language=R]{itemb.R}
 E assim vamos achar $$\theta=0.1708 $$
 \newpage
-\section{Item c}[Variável Controle]
+\section{Item c}[Variável Controle]\\
 Definindo a variável controle $Z=\displaystyle\sum_{i=1}^5 iX_{i} \Rightarrow \mathbb{E}[Z]=15$ e $Var[Z]=55$.
 Simulando $Cov(Y,Z)$, onde $Y=I$
 
@@ -98,7 +98,7 @@ Vamos achar $\mathbb{E}[I]$ e assim estimar a probabilidade pedida
 \lstinputlisting[language=R]{itemc1.R}
 
 E assim vamos achar $$\theta=0.178 $$
-\section{Item d}
+\section{Item d}[Conclusão]\\
 Codigo usado para comparar os resultados dos itens b e c.
 \lstinputlisting[language=R]{itemd.R}
 
@@ -108,6 +108,6 @@ O gráfico se encontra na próxima pagina
 \includegraphics[width=.5\linewidth]{Grafico.png}
 \end{center}
 
-Portanto, concluímos que o método \textcolor{blue}{Variáveis Antagónicas} possui variância menor do que o método  \textcolor{red}{Variáveis Controle}, sendo assim escolheríamos o método das variáveis antagónicas pois nesse método teríamos um estimado que em media acerta e teria um variância menor.
+Portanto, concluímos que o método \textcolor{red}{Variável Controle} possui variância menor do que o método  \textcolor{blue}{Variáveis Antagónicas}, sendo assim escolheríamos o método   \textcolor{red}{Variável Controle} pois nesse método teríamos um estimado que em media acerta e teria um variância menor.
 
 \end{document}

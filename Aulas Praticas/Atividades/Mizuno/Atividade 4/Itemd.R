@@ -1,15 +1,18 @@
 # Item d ------------------------------------------------------------------
 e1 <- 0
 for (i in 1:1000){
-  e1[i] <- f(100)
+  e1[i] <- f(1000)
 }
 
 e <- ant(1000)
-
-hist(e1, col="red", ylab=" ", 
-     xlab=expression(theta), main="Analisando a variancia dos dois metodos" )
-hist(e, col="blue", add=T)
+#Controle esta de vermelho e antagocnicas esta de azul
+hist(e1, col="red",add=TRUE)
+hist(e, col="blue", ylab=" ", 
+     xlab=expression(theta), main="Analisando a variancia dos dois metodos")
 legend("topright", legend=c("Controle","Antagonicas"), col=c("red", 
                                                              "blue"), pt.cex=2, pch=15 )
+png(filename="your/file/location/name.png")
+plot(fit)
+dev.off()
              
                                                       
