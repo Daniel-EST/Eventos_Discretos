@@ -201,5 +201,14 @@ plot_ly(y = antagonica,
   layout(xaxis = list(title = "Método utilizado"),
          yaxis = list(title = "Valor estimado"))
 
+plot_ly(alpha = 0.6) %>%
+    add_histogram(x = controle,
+                name = 'Controle') %>%
+  add_histogram(x = antagonica,
+                name = 'Antagônica') %>%
+  layout(barmode = "overlay") %>% 
+  layout(xaxis = list(title = "Método utilizado"),
+         yaxis = list(title = "Valor estimado"))
+
 ```
 Foi o usado o pacote `plotly` para gerar esses gráficos.

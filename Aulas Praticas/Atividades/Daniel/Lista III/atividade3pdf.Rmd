@@ -8,6 +8,7 @@ output: pdf_document
 
 ```{r include=FALSE}
 library(ggplot2, quietly = TRUE)
+library(reshape2)
 ```
 
 # Funções auxiliares
@@ -142,5 +143,13 @@ data=data.frame(names,value)
  
 #Graph
 qplot(x=names , y=value , data=data , geom=c("boxplot","jitter") , fill=names, xlab = 'Método', ylab = 'Estimação')
+
+#But it is hard to visualize differences in the distribution. 
+#It would be more interesting to have both distribution on the same graph, 
+#with transparency permitting to see the whole distribution :
+hist(antagonica, col=rgb(1,0,0,0.5), xlim = c(0.155,0.180),ylim = c(0,15) ,xlab="Estimação", main = '',yaxt='n', breaks = 30)
+hist(controle, col=rgb(0,0,1,0.5), xlim = c(0.155,0.180), breaks = 30,ylim = c(0,15), add=T)
+legend("topright", legend=c("Antagônica","Controle"), col=c(rgb(1,0,0,0.5), 
+     rgb(0,0,1,0.5)), pt.cex=2, pch=15)
 ```
 Foi o usado o pacote `ggplot2` para gerar esses gráficos.
