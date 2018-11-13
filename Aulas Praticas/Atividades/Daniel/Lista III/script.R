@@ -19,8 +19,11 @@ exprn <- function(n,lambda){
 # Questão 1
 # a)
 q1_a <- function(n){
-  prob <- NULL
-  for(i in 1:n) prob[i] <- ifelse(sum(1:5*exprn(5, 1)) >= 21.6, 1, 0)
+  prob <- NULL ;  temp <- NULL
+  for(j in 1:n){
+    for(i in 1:n) temp[i] <- ifelse(sum(1:5*exprn(5, 1)) >= 21.6, 1, 0)
+    prob[j] <- mean(temp)
+  }
   return(mean(prob))
 }
 q1_a(100)
