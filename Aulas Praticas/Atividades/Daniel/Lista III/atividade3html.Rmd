@@ -1,7 +1,7 @@
 ---
 title: "Simulação de Eventos Discretos \nAtividade III"
 author: "Daniel dos Santos"
-date: "`r format(Sys.Date(), '%d de %B de %y.')`"
+date: "`r format(Sys.Date(), '%d de %B de %Y.')`"
 output:
   rmdformats::readthedown:
     code_folding: show
@@ -22,6 +22,43 @@ output:
     -webkit-columns: 3 100px;
     -moz-columns: 3 100px;
   }
+  #main .nav-pills > li > a:hover {
+    color: #FFFFFF !important;
+    background-color: #f28241;
+  }
+  #main .nav-pills > li.active > a:focus {
+    color: #FFFFFF !important;
+    background-color: #f28241;
+  }
+  h1,h2,h3,h4,h5,h6,legend{
+    font-family:"Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;
+    font-weight:700;
+    color: #f28241;
+  }
+  #table-of-contents h2{
+    z-index:200;
+    background-color:#f28241;
+    text-align:center;
+    padding:0.809em;
+   display:block;
+    color:#fcfcfc;
+   font-size: 100%;
+    margin-top: 0px;
+    margin-bottom:0.809em;
+  }
+  #table-of-contents header{
+  height:32px;
+    display:inline-block;
+    line-height:32px;
+    padding:0 1.618em;
+    display:block;
+    font-weight:bold;
+    text-transform:uppercase;
+    font-size:80%;
+    color:#f28241;
+    white-space:nowrap
+  }
+
 </style>
 
 
@@ -31,6 +68,9 @@ library(plotly, quietly = TRUE)
 
 # Funções auxiliares
 
+`expr` gera uma exponencial de parâmetro $\lambda$:
+$$X\sim Exp(\lambda)$$
+
 ```{r}
 expr <- function(lambda){
   u <- runif(1)
@@ -38,6 +78,8 @@ expr <- function(lambda){
 }
 ```
 
+`exprn` gera uma sequência de v.a.'s com distribuição exponencial de parâmetro $\lambda$:
+$$(X_1,X_2,\dots,X_n)\sim Exp(\lambda)$$
 ```{r}
 exprn <- function(n,lambda){
   exp <- NULL
@@ -49,8 +91,16 @@ exprn <- function(n,lambda){
 ```
 
 # Questão 1
+Sendo, $(X_1,X_2,\dots, X_5)\sim Exp(1)$ i.i.d.'s.
+$$\theta=\mathbb{P}\left(\sum_{i=1}^{5}iX_i\ge21.6\right)$$
 
 ## a) Não usaremos nenhum método de  redução de variância.
+
+Nesse primeiro caso não utilizaremos nenhum método de redução de variância para estimar o valor de $\theta$.
+Logo, definimos a indicadora:
+$$I=\begin{cases} 1, & \mbox{se } \displaystyle\sum_{i=1}^5 iX_{i}\geqslant21.6\\ 0, & \mbox{c.c.}\end{cases}$$  
+Dessa forma temos o seguinte resultado:
+$$\theta=\mathbb{E}[I]=1\cdot\mathbb{P}\left( \displaystyle\sum_{i=1}^5 iX_{i}\geqslant21.6 \right) + 0 \cdot \left (\displaystyle\sum_{i=1}^5 iX_{i}<21.6\right) = \mathbb{P}\left( \displaystyle\sum_{i=1}^5 iX_{i}\geqslant21.6 \right)$$
 
 ```{r}
 q1_a <- function(n){
@@ -58,10 +108,22 @@ q1_a <- function(n){
   for(i in 1:n) prob[i] <- ifelse(sum(1:5*exprn(5, 1)) >= 21.6, 1, 0)
   return(mean(prob))
 }
-q1_a(100)
+```
+```{r echo=FALSE}
+a <- q1_a(100) ; a
 ```
 
-## b) Usaremos agora o método das variáveis antagônicas.
+O valor estimado para $\theta$ nesse caso foi de `r a`.
+
+## b) Variáveis antagônicas
+Sejam:
+$$X_1 = h(U_1,U_2, \dots, U_m)$$
+$$X_2 = h(1-U_1,1-U_2, \dots, 1-U_m)$$
+<center>Onde,</center>
+$$Ui \sim U(0,1) \\ i = 1,2,\dots,m$$
+Perceba que, $X_1$ e $X_2$ são dependentes e são negativamente correlacionados, dessa forma:
+$$Var\left(\frac{X_1+X_2}{2}\right) = \frac{1}{4}Var(X_1)+[Var(X_2)+2Cov(X_1,X_2)]$$
+É possível provar que a variância pelo método das variáveis antagônicas será menor do que se não utilizarmos nenhum método.
 
 ```{r}
 q1_b <- function(n){
@@ -77,10 +139,16 @@ q1_b <- function(n){
   }
   return(mean(prob))
 }
-q1_b(100)
+```
+```{r echo=FALSE}
+b <- q1_b(100) ; b
 ```
 
-## c) Usaremos agora o método da variável controle.
+O valor estimado para $\theta$ por esse método foi de `r b`.
+
+## c) Variável controle
+Definindo a variável controle: $Z=\displaystyle\sum_{i=1}^5 iX_{i} \Rightarrow \mathbb{E}[Z]=15$ e $Var[Z]=55$.
+Simulando $Cov(Y,Z)$, onde $Y=I$
 
 ```{r}
 q1_c <- function(n){
@@ -95,12 +163,16 @@ q1_c <- function(n){
   }
   return(mean(prob))
 }
-q1_c(100)
 ```
 
-## d) Qual método reduziu mais a variância?
-Foi o usado o pacote `plotly` para gerar esses gráficos.
+```{r echo=FALSE}
+c <- q1_c(100) ; c
+```
 
+
+## d) Qual método reduziu mais a variância?
+
+Fiz uma análise descritiva para verificar qual método reduziu mais a variância. Através do gráfico abaixo podemos observar que o método das [variáveis antagônicas](#b-variaveis-antagonicas) obteve uma variância menor do que o método da [variávei controle](#c-variavel-controle).
 ```{r echo=FALSE}
 antagonica <- NULL
 for(i in 1:100){
@@ -127,3 +199,4 @@ plot_ly(y = antagonica,
          yaxis = list(title = "Valor estimado"))
 
 ```
+Foi o usado o pacote `plotly` para gerar esses gráficos.
