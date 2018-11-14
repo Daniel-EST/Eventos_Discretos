@@ -175,7 +175,7 @@ c <- q1_c(100) ; c
 
 ## d) Qual método reduziu mais a variância?
 
-Fiz uma análise descritiva para verificar qual método reduziu mais a variância. Através do gráfico abaixo podemos observar que o método das [variáveis antagônicas](#b-variaveis-antagonicas) obteve uma variância menor do que o método da [variávei controle](#c-variavel-controle).
+Fiz uma análise descritiva para verificar qual método reduziu mais a variância. Através do gráfico abaixo podemos observar que o método das [variáveis antagônicas](#b-variaveis-antagonicas) obteve uma variância menor do que o método da [variável controle](#c-variavel-controle).
 ```{r echo=FALSE}
 antagonica <- NULL
 for(i in 1:100){
@@ -186,7 +186,26 @@ controle <- NULL
 for(i in 1:100){
   controle[i] <- q1_c(100)
 }
+```
 
+```{r echo=FALSE}
+A <- var(antagonica) ; B <- var(controle)
+```
+
+```{r}
+var(antagonica)
+```
+
+```{r}
+var(antagonica)
+```
+
+
+A variância encontrada para o método da antagônica foi $`r A`$, e pelo método da variável controle $`r B`$. Logo, o método da antagônica diminuiu mais a variância.
+
+
+### Gráficos
+```{r echo=FALSE}
 plot_ly(y = antagonica, 
         type = "box", 
         boxpoints = "all",

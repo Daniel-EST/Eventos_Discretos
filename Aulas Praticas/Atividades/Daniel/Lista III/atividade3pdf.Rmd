@@ -2,9 +2,10 @@
 title: "Simulação de Eventos Discretos \nAtividade III"
 author: "Daniel dos Santos"
 date: "`r format(Sys.Date(), '%d de %B de %Y.')`"
-output: pdf_document
-
+output: 
+  pdf_document
 ---
+
 
 ```{r include=FALSE}
 library(ggplot2, quietly = TRUE)
@@ -135,7 +136,16 @@ controle <- NULL
 for(i in 1:100){
   controle[i] <- q1_c(100)
 }
- 
+```
+
+```{r echo=FALSE}
+A <- var(antagonica) ; B <- var(controle)
+```
+
+A variância encontrada para o método da antagônica foi $`r A`$, e pelo método da variável controle $`r B`$. Logo, o método da antagônica diminuiu mais a variância.
+
+### Gráficos
+```{r echo=FALSE, fig.height= 4.5, fig.align = "center"}
 # Data 
 names=c(rep("Antagônica", 100) , rep("Controle", 100))
 value=c(antagonica,controle)
@@ -147,9 +157,10 @@ qplot(x=names , y=value , data=data , geom=c("boxplot","jitter") , fill=names, x
 #But it is hard to visualize differences in the distribution. 
 #It would be more interesting to have both distribution on the same graph, 
 #with transparency permitting to see the whole distribution :
-hist(antagonica, col=rgb(1,0,0,0.5), xlim = c(0.155,0.180),ylim = c(0,15) ,xlab="Estimação", main = '',yaxt='n', breaks = 30)
+hist(antagonica, col=rgb(1,0,0,0.5), xlim = c(0.155,0.180),ylim = c(0,15) ,xlab="Estimação", main = '',yaxt='n', breaks = 30, ylab = '')
 hist(controle, col=rgb(0,0,1,0.5), xlim = c(0.155,0.180), breaks = 30,ylim = c(0,15), add=T)
 legend("topright", legend=c("Antagônica","Controle"), col=c(rgb(1,0,0,0.5), 
      rgb(0,0,1,0.5)), pt.cex=2, pch=15)
 ```
+
 Foi o usado o pacote `ggplot2` para gerar esses gráficos.
