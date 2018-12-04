@@ -1,0 +1,60 @@
+---
+title: "Your Document Title"
+author: "Document Author"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+## Funções Auxiliares
+
+```{r}
+exp <- function(lambda){
+  u <- runif(1)
+  y <- -log(1-u)/lambda
+  return(y)
+}
+
+gama <- function(n,lambda){
+  y <- 0
+  for (i in 1:n){
+    y[i] <- exp(lambda)
+  }
+  x <- sum(y)
+  return(x)
+}
+
+uniforme <- function(a,b){
+  u <- runif(1)
+  x <- u*(b-a)+a
+  return(x)
+}
+
+```
+
+## Resolvendo a atividade
+
+Simulando os valores de de $W_1|(N_1(.5)=25; N_2(.5)=18)$ e $W_2(N_1(.5)=25; N_2(.5)=18)$ condicionados 
+
+```{r}
+W1W2 <- function(n){
+  y <- runif(1,0.02,.1)
+  w1 <- rexp(1,y); w2 <- rexp(1,y)
+  for (i in 1:n){
+    y <- gama(3,w1+w2)
+    w1 <- c(gama(26,y+.5),w1)
+    w2 <- c(gama(19,y+.5),w2)
+  }
+  return(list(W1=w1,W2=w2))
+}
+```
+
+Estimando as esperanças
+
+```{r}
+n <- 100
+e1 <- 25+mean(n)*.5; e1
+e2 <- 18+mean(n)*.5; e2
+```

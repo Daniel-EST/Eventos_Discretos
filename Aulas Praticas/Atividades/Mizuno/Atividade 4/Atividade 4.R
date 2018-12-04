@@ -29,7 +29,6 @@ I <- function(n,lambda){
 }
 
 #Vamos achar E[I] e assim estimar a probabilidade pedida
-
 e2 <- NULL; t <- NULL
 for (i in 1:1000){
   for (j in 1:100){
@@ -76,7 +75,7 @@ cont <- function(n){
   prob <- c(prob,mean(Y)-(cov/55)*(mean(Z)-15))
   return(prob)
 }
-cont(100)
+cont(1000)
 
 # Item d ------------------------------------------------------------------
 
