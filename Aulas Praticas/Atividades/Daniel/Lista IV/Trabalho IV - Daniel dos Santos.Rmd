@@ -1,0 +1,176 @@
+---
+title: "Simulação de Eventos Discretos \nAtividade IV"
+author: "Daniel dos Santos"
+date: "`r format(Sys.Date(), '%d de %B de %Y.')`"
+output:
+  rmdformats::readthedown:
+  code_folding: show
+self_contained: true
+thumbnails: false
+lightbox: false
+number_sections: false
+---
+  
+<style>
+.col2 {
+  columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+}
+.col3 {
+  columns: 3 100px;
+  -webkit-columns: 3 100px;
+  -moz-columns: 3 100px;
+}
+#main .nav-pills > li > a:hover {
+color: #FFFFFF !important;
+  background-color: #f28241;
+  }
+#main .nav-pills > li.active > a:focus {
+color: #FFFFFF !important;
+  background-color: #f28241;
+  }
+h1,h2,h3,h4,h5,h6,legend{
+  font-family:"Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;
+  font-weight:700;
+  color: #f28241;
+}
+#table-of-contents h2{
+z-index:200;
+background-color:#f28241;
+  text-align:center;
+padding:0.809em;
+display:block;
+color:#fcfcfc;
+  font-size: 100%;
+margin-top: 0px;
+margin-bottom:0.809em;
+}
+#table-of-contents header{
+height:32px;
+display:inline-block;
+line-height:32px;
+padding:0 1.618em;
+display:block;
+font-weight:bold;
+text-transform:uppercase;
+font-size:80%;
+color:#f28241;
+  white-space:nowrap
+}
+</style>
+
+```{r include=FALSE}
+library(plotly, quietly = TRUE)
+```
+
+# Funções auxiliares
+`expRandom` gera uma exponencial de parâmetro $\lambda$:
+  $$X\sim Exp(\lambda)$$
+
+```{r}
+expRandom <- function(lambda) return(-log(runif(1))/lambda)
+```
+
+`gammaRandom` gera uma gamma de parâmetro $\alpha$ e $\beta$:
+  $$X\sim \Gamma(\alpha,\beta)$$
+
+```{r}
+gammaRandom  <-
+  function(alpha, beta)
+{
+  temp <- NULL
+  for (i in 1:alpha){
+    temp[i] <- expRandom(beta)
+  }
+  return(sum(temp))
+}
+```
+
+# Execução do algorítimo do exercício
+
+Função que gera o estado inicial do nosso problema. Onde:
+$$Y \sim U(0.02, 0.1)$$
+$$W_1 \sim Exp(Y)$$
+$$W_2 \sim Exp(Y)$$
+
+```{r}
+estadoInicial <- 
+  function()
+{
+  y <- runif(1, .02, .1)
+  w1 <- expRandom(y)
+  w2 <- expRandom(y)
+  return(c(w1, w2, y))
+}
+```
+
+
+Algorítimo que simula as probabilidades condicionais.
+
+```{r}
+simulation <- 
+  function(n)
+{
+  temp <- estadoInicial()
+  w1 <- temp[1] ; w2 <- temp[2] ; y <- temp[3]
+  aux <- list()
+  for(i in 1:n)
+  {
+    while(y < .02 | y > 0.1){
+      y <- gammaRandom(3, w1[i] + w2[i])
+    }
+    w1[i] <- gammaRandom(26, y + 1/2)
+    w2[i] <- gammaRandom(19, y + 1/2)
+  }
+  return(list(w1 = w1, 
+              w2 = w2))
+}
+
+```
+Simulando:
+```{r}
+JogadorA <- mean(25 + .5*simulation(10200)$w1[201:10200]) ; JogadorA
+JogadorB <- mean(18 + .5*simulation(10200)$w2[201:10200]) ; JogadorB
+```
+OBS.: Estou retirando os primeiros 200 valores para reduzir o efeito do estado inicial.
+
+Valores encontrados:  
+* Jogador A = `r JogadorA`  
+* Jogador B = `r JogadorB`  
+
+# Gráficos
+```{r echo=FALSE}
+JogadorA <- JogadorB <- NULL
+for(i in 1:100){
+  JogadorA[i] <- mean(25 + .5*simulation(10200)$w1[201:10200])
+  JogadorB[i] <- mean(18 + .5*simulation(10200)$w2[201:10200])
+}
+sim <- 1:100
+
+data <- data.frame(sim, JogadorA, JogadorB)
+
+
+
+#The default order will be alphabetized unless specified as below:
+data$month <- factor(data$sim, levels = data[["sim"]])
+
+plot_ly(data, x = ~sim, 
+             y = ~JogadorA, 
+             name = 'Jogador A', 
+             type = 'scatter', 
+             mode = 'lines',
+             line = list(color = 'rgb(205, 12, 24)', 
+                         width = 4)) %>%
+  add_trace(y = ~JogadorB, 
+            name = 'Jogador B', 
+            line = list(color = 'rgb(205, 12, 24)', 
+                        width = 4, 
+                        dash = 'lines')) %>%
+  layout(title = "Gráfico com diferentes simulações do número médio de 'Homeruns'\nem uma temporada entre os jogadores",
+         xaxis = list(title = ""),
+         yaxis = list (title = "Número de Homeruns"))
+```
+Foi o usado o pacote `plotly` para gerar esses gráficos.
+  
+Todo o material pode ser visto no repositório do [github](https://github.com/GMizuno/Eventos_Discretos).
