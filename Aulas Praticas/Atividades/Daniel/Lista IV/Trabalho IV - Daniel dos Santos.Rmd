@@ -164,7 +164,7 @@ plot_ly(data, x = ~sim,
                          width = 4)) %>%
   add_trace(y = ~JogadorB, 
             name = 'Jogador B', 
-            line = list(color = 'rgb(205, 12, 24)', 
+            line = list(color = 'rgb(30,144,255)', 
                         width = 4, 
                         dash = 'lines')) %>%
   layout(title = "Gráfico com diferentes simulações do número médio de 'Homeruns'\nem uma temporada entre os jogadores",

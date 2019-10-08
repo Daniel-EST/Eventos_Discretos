@@ -186,14 +186,23 @@ controle <- NULL
 for(i in 1:100){
   controle[i] <- q1_c(100)
 }
+
+nenhuma <- NULL
+for(i in 1:100){
+  nenhuma[i] <- q1_a(100)
+}
 ```
 
 ```{r echo=FALSE}
-A <- var(antagonica) ; B <- var(controle)
+A <- var(antagonica) ; B <- var(controle); N <- var(nenhuma)
 ```
 
 ```{r}
-var(antagonica)
+var(nenhuma)
+```
+
+```{r}
+var(controle)
 ```
 
 ```{r}
